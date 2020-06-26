@@ -32,3 +32,24 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
   <!--  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>-->
 </ruleset>
 ```
+
+### Running checks
+
+In your project directory run this command:
+
+```bash
+vendor/bin/phpcs --standard=phpcs.ruleset.xml --extensions=php --tab-width=4 -sp src
+```
+
+### Automatically fixing errors
+
+In your project directory run this command:
+
+```bash
+vendor/bin/phpcbf --standard=phpcs.ruleset.xml --extensions=php --tab-width=4 -sp src
+```
+
+## Additional links
+
+Sniffs documentation for slevomat coding standards are here: 
+https://github.com/slevomat/coding-standard
