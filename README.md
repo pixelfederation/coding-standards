@@ -24,6 +24,14 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
   <description>PixelFederation rule set.</description>
   <exclude-pattern>tests/</exclude-pattern>
   <rule ref="vendor/pixelfederation/coding-standards/phpcs.ruleset.xml"/>
+
+  <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+    <properties>
+      <property name="rootNamespaces" type="array">
+        <element key="src" value="Your\Root\Namespace"/><!-- add your namespaces -->
+      </property>
+    </properties>
+  </rule>
   
   <!-- include for PHP 7.3+ -->
   <!--  <rule ref="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>-->

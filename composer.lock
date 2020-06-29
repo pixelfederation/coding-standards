@@ -4,9 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f242c133a52690071e362d173d3e5e0d",
-    "packages": [],
-    "packages-dev": [
+    "content-hash": "2b5e963c35de5eeb76f35e9248e42a55",
+    "packages": [
         {
             "name": "phpcompatibility/php-compatibility",
             "version": "9.3.5",
@@ -213,6 +212,7 @@
             "time": "2020-04-17T01:09:41+00:00"
         }
     ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

@@ -1,0 +1,20 @@
+version: '3.5'
+
+networks:
+  default:
+    external:
+      name: docker.pxfd.tech
+
+services:
+  # PHP
+  php7-coding-standards:
+    container_name: php7-coding-standards
+    image: docker-registry.pxfd.tech/php-fpm:7.4.5-fpm-buster_3-build
+    volumes:
+      - .:/srv/www:delegated
+      - ~/.ssh:/var/www/.ssh
+    environment:
+      - USER_ID=${USER_ID:-1000}
+      - PHP_JENKINS_ENV=false
+      - COMPOSER_MEMORY_LIMIT=-1
+      - PHP_EXEC_COMMAND=ssh-keyscan git.pixelfederation.com >> /var/www/.ssh/known_hosts && tail -f /dev/null
