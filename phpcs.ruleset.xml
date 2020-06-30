@@ -4,7 +4,6 @@
   <description>PixelFederation rule set.</description>
   <exclude-pattern>tests/</exclude-pattern>
   <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility"/>
-  <config name="testVersion" value="7.2-7.4"/>
 
   <rule ref="PSR12"/>
   <rule ref="PHPCompatibility"/>

@@ -20,6 +20,8 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
 <ruleset name="PixelFederation">
 
   <description>PixelFederation rule set.</description>
+    
+  <config name="testVersion" value="7.2-7.4"/><!-- insert your php version -->
   <exclude-pattern>tests/</exclude-pattern>
   <rule ref="vendor/pixelfederation/coding-standards/phpcs.ruleset.xml"/>
 
