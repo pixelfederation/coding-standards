@@ -8,8 +8,6 @@ each project that uses PHPCS.
 ### 1) Install composer dependencies
 
 ```bash
-composer require phpcompatibility/php-compatibility:^9.3 --dev
-composer require slevomat/coding-standard:~6.0 --dev
 composer require pixelfederation/coding-standards:^1.0 --dev
 ```
 
