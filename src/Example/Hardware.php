@@ -14,10 +14,5 @@ use PixelFederation\CodingStandards\Example\Common\HardwareId;
 
 interface Hardware extends Traits\SerialNumberHaving, Traits\ServiceTagHaving
 {
-    /**
-     * Get Hardare Id
-     *
-     * @return int
-     */
     public function getId(): HardwareId;
 }
