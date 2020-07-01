@@ -30,6 +30,7 @@
     <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
     <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/><!-- for php 7.2 -->
     <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/><!-- explicitly add for php 7.4 -->
+    <exclude name="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/><!-- explicitly add for php 7.4 -->
   </rule>
   <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
     <properties>

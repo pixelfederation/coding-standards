@@ -38,6 +38,7 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
   
   <!-- include for PHP 7.4+ -->
   <!--  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>-->
+  <!--  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>-->
 </ruleset>
 ```
 
