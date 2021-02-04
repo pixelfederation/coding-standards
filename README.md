@@ -29,6 +29,9 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/> -->
+    <!-- v mastry ale este nie v relese maju takuto smakocinku, takze potom to pripadne exludnite -->
+    <!-- https://github.com/slevomat/coding-standard/blob/master/SlevomatCodingStandard/Sniffs/Files/FunctionLengthSniff.php -->
+    <!-- <exclude name="SlevomatCodingStandard.Files.FunctionLength"/> -->
   </rule>
 
   <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
@@ -38,7 +41,10 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
       </property>
     </properties>
   </rule>
-  
+
+  <!-- include for PHP 7.2- -->
+  <!--  <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall"/>-->
+
   <!-- include for PHP 7.3+ -->
   <!--  <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>-->
   

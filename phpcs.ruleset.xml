@@ -29,7 +29,8 @@
     <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
     <exclude name="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator"/>
     <exclude name="SlevomatCodingStandard.Numbers.DisallowNumericLiteralSeparator"/>
-    <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/><!-- for php 7.2 -->
+    <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall"/><!-- explicitly add for php < 7.3 -->
+    <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/><!-- explicitly add for php >= 7.3 -->
     <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/><!-- explicitly add for php 7.4 -->
     <exclude name="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/><!-- explicitly add for php 7.4 -->
   </rule>
