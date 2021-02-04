@@ -22,7 +22,6 @@
     <exclude name="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode"/><!-- contains bugs -->
     <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants"/>
     <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
-    <exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
     <exclude name="SlevomatCodingStandard.Classes.TraitUseSpacing"/>
     <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
     <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
@@ -30,7 +29,7 @@
     <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
     <exclude name="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator"/>
     <exclude name="SlevomatCodingStandard.Numbers.DisallowNumericLiteralSeparator"/>
-    <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall"/><!-- for php 7.2 -->
+    <exclude name="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/><!-- for php 7.2 -->
     <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/><!-- explicitly add for php 7.4 -->
     <exclude name="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/><!-- explicitly add for php 7.4 -->
   </rule>

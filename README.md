@@ -40,7 +40,7 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
   </rule>
   
   <!-- include for PHP 7.3+ -->
-  <!--  <rule ref="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>-->
+  <!--  <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>-->
   
   <!-- include for PHP 7.4+ -->
   <!--  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>-->
