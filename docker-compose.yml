@@ -7,9 +7,9 @@ networks:
 
 services:
   # PHP
-  php7-coding-standards:
-    container_name: php7-coding-standards
-    image: docker-registry.pxfd.tech/php-fpm:7.4.5-fpm-buster_3-build
+  coding-standards-php7:
+    container_name: coding-standards-php7
+    image: docker-registry.pxfd.tech/php-fpm:7.4.10-fpm-buster_3-build
     volumes:
       - .:/srv/www:delegated
       - ~/.ssh:/var/www/.ssh
