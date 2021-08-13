@@ -1,14 +1,14 @@
 # Coding standards
 
-This package provides PHPCS rule set for coding standards in Pixelfederation. It should be included into
-each project that uses PHPCS.
+This package provides PHPCS rule set for coding standards in Pixel Federation. It should be included into
+each project maintained by Pixel Federation that uses PHP Code Sniffer [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer).
 
 ## Example usage
 
 ### 1) Install composer dependencies
 
 ```bash
-composer require pixelfederation/coding-standards:^1.0 --dev
+composer require pixelfederation/coding-standards:^2.0 --dev
 ```
 
 ### 2) Ruleset creation
@@ -29,8 +29,6 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/> -->
-    <!-- v mastry ale este nie v relese maju takuto smakocinku, takze potom to pripadne exludnite -->
-    <!-- https://github.com/slevomat/coding-standard/blob/master/SlevomatCodingStandard/Sniffs/Files/FunctionLengthSniff.php -->
     <!-- <exclude name="SlevomatCodingStandard.Files.FunctionLength"/> -->
   </rule>
 
