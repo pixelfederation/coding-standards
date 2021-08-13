@@ -26,5 +26,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "scripts": {
+    "lic-check": "license-checker check"
   }
 }
