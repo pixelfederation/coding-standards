@@ -1,6 +1,6 @@
 {
   "name": "pixelfederation/coding-standards",
-  "homepage": "https://git.pixelfederation.com/shared/server-coding-standards",
+  "homepage": "https://github.com/pixelfederation/coding-standards",
   "type": "library",
   "description": "Standardized PHPCS sniffs for backend developers.",
   "license": "BSD-3-Clause",
