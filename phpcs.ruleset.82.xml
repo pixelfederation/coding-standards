@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="PixelFederation">
+  <rule ref="phpcs.ruleset.81.xml">
+    <arg name="extensions" value="php" />
+  </rule>
+</ruleset>

@@ -11,9 +11,9 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": "~7.4.0|^8.1",
     "phpcompatibility/php-compatibility": "^9.3",
-    "slevomat/coding-standard": "^7.0.9",
+    "slevomat/coding-standard": "^8.8",
     "squizlabs/php_codesniffer": "^3.5"
   },
   "require-dev": {
@@ -25,9 +25,18 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "scripts": {
+    "phpcs7.4": "phpcs --standard=src/phpcs.ruleset.xml --extensions=php --tab-width=4 -sp --colors src/Example/Php74",
+    "phpcs8.1": "phpcs --standard=src/phpcs.ruleset.81.xml src/Example/Php81",
+    "phpcs8.2": "phpcs --standard=src/phpcs.ruleset.82.xml src/Example/Php82",
+    "phpcbf7.4": "phpcbf --standard=src/phpcs.ruleset.xml --extensions=php --tab-width=4 -sp src/Example/Php74",
+    "phpcbf8.1": "phpcbf --standard=src/phpcs.ruleset.81.xml src/Example/Php81",
+    "phpcbf8.2": "phpcbf --standard=src/phpcs.ruleset.82.xml src/Example/Php82",
     "lic-check": "license-checker check"
   }
 }
