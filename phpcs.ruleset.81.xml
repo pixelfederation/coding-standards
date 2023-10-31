@@ -428,7 +428,11 @@
   <rule ref="SlevomatCodingStandard.PHP.UselessParentheses"/>
   <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
   <rule ref="SlevomatCodingStandard.Strings.DisallowVariableParsing"/>
-  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
+  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+    <properties>
+      <property name="spacesCountAroundEqualsSign" value="0"/>
+    </properties>
+  </rule>
   <rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
   <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
   <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
