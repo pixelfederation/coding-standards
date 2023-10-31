@@ -6,10 +6,10 @@
 
 declare(strict_types=1);
 
-namespace PixelFederation\CodingStandards\Example;
+namespace PixelFederation\CodingStandards\Example\Php74;
 
-use PixelFederation\CodingStandards\Example\Common\EntityManager;
-use PixelFederation\CodingStandards\Example\Common\HardwareId;
+use PixelFederation\CodingStandards\Example\Php74\Common\EntityManager;
+use PixelFederation\CodingStandards\Example\Php74\Common\HardwareId;
 
 final class HardwareRepository
 {

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="PixelFederation">
-  <description>PixelFederation example rule set.</description>
+  <description>PixelFederation example rule set for PHP 7.4.</description>
   <rule ref="../phpcs.ruleset.xml"/>
 
   <!-- include for PHP 7.3+ -->

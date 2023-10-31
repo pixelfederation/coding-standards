@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace PixelFederation\CodingStandards\Example\Traits;
+namespace PixelFederation\CodingStandards\Example\Php74\Traits;
 
-use PixelFederation\CodingStandards\Example\Common\SerialNumber;
+use PixelFederation\CodingStandards\Example\Php74\Common\SerialNumber;
 
 interface SerialNumberHaving
 {

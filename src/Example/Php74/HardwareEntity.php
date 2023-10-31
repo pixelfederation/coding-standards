@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-namespace PixelFederation\CodingStandards\Example;
+namespace PixelFederation\CodingStandards\Example\Php74;
 
-use PixelFederation\CodingStandards\Example\Common\HardwareId;
-use PixelFederation\CodingStandards\Example\Common\SerialNumber;
-use PixelFederation\CodingStandards\Example\Common\ServiceTag;
+use PixelFederation\CodingStandards\Example\Php74\Common\HardwareId;
+use PixelFederation\CodingStandards\Example\Php74\Common\SerialNumber;
+use PixelFederation\CodingStandards\Example\Php74\Common\ServiceTag;
 
 final class HardwareEntity implements Hardware
 {

@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace PixelFederation\CodingStandards\Example\Common;
+namespace PixelFederation\CodingStandards\Example\Php74\Common;
 
-interface HardwareId
+final class ServiceTag
 {
 
 }
