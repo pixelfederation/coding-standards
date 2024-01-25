@@ -114,13 +114,11 @@
   <rule ref="Squiz.Classes.ValidClassName"/>
   <rule ref="Squiz.Commenting.BlockComment"/>
   <rule ref="Squiz.Commenting.DocCommentAlignment"/>
-  <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>  <!-- Naozaj treba mat v komentari throws tagy? -->
   <rule ref="Squiz.ControlStructures.ControlSignature">
     <properties>
       <property name="requiredSpacesBeforeColon" value="0"/>
     </properties>
-  </rule>
-  <rule ref="Squiz.ControlStructures.ElseIfDeclaration"/> <!-- Nie som si isty ci to vobec chceme elseif -> else if -->
+  </rule> 
   <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
   <rule ref="Squiz.ControlStructures.ForLoopDeclaration">
     <properties>
@@ -215,11 +213,6 @@
   <rule ref="SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment"/>
   <rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing"/>
   <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
-  <rule ref="SlevomatCodingStandard.Classes.ClassLength">             <!-- Chceme obmedzovat dlzku class? -->
-    <properties>
-      <property name="maxLinesLength" value="250"/>
-    </properties>
-  </rule>
   <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing"/>
   <rule ref="SlevomatCodingStandard.Classes.ClassStructure">      <!-- checknite poradie, nerozlisoval som poradie final, static, atd -->
     <properties>
@@ -232,26 +225,32 @@
         <element value="protected constants"/>
         <element value="private constants"/>
 
-        <element value="public properties, public static properties"/>
-        <element value="protected properties, protected static properties"/>
-        <element value="private properties, private static properties"/>
+        <element value="public static properties"/>
+        <element value="public properties"/>
+    
+        <element value="protected static properties"/>
+        <element value="protected properties"/>
+        
+        <element value="private static properties"/>
+        <element value="private properties"/>
 
         <element value="constructor"/>
         <element value="static constructors"/>
-        <element value="destructor"/>
-
-        <element value="all public methods"/>
+      
+        <element value="all public methods"/> <!-- rozdelit aj na staticke metody -->
         <element value="all protected methods"/>
         <element value="all private methods"/>
 
-        <element value="magic methods"/>
+        <element value="magic methods"/>  <!-- skusit zistit ci invoke nevieme nejako poriesit ze bude bez poradia -->
+        
+        <element value="destructor"/>
       </property>
     </properties>
   </rule>
   <rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
   <rule ref="SlevomatCodingStandard.Classes.DisallowMultiConstantDefinition"/>
   <rule ref="SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition"/>
-  <rule ref="SlevomatCodingStandard.Classes.DisallowStringExpressionPropertyFetch"/>   <!-- Nie som si isty ci ano alebo nie -->
+  <rule ref="SlevomatCodingStandard.Classes.DisallowStringExpressionPropertyFetch"/>
   <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
     <properties>
       <property name="linesCountAfterOpeningBrace" value="0"/>
@@ -261,7 +260,7 @@
   <rule ref="SlevomatCodingStandard.Classes.EnumCaseSpacing"/>
   <rule ref="SlevomatCodingStandard.Classes.MethodSpacing"/>
   <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
-  <rule ref="SlevomatCodingStandard.Classes.ParentCallSpacing"/>              <!-- Nie som si isty ci ano alebo nie -->
+  <rule ref="SlevomatCodingStandard.Classes.ParentCallSpacing"/>
   <rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration">
     <properties>
       <property name="modifiersOrder" type="array">
@@ -274,20 +273,21 @@
       <property name="enableMultipleSpacesBetweenModifiersCheck" value="true"/>
     </properties>
   </rule>
-  <rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>          <!-- Povolujeme properties hned pod sebou alebo aj oddelene riadkom -->
   <rule ref="SlevomatCodingStandard.Classes.RequireAbstractOrFinal"/>
-  <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion"/>      <!-- Urcite chceme? -->
-  <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">      <!-- Treba dohodnut -->
+  <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion"/>
+  <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">
     <properties>
-      <property name="minParametersCount" value="2"/>
+      <property name="minParametersCount" value="1"/>
+      <property name="includedMethodPatterns" value="__construct"/> <!-- pozriet nech to plati len pre __constructor  -->
     </properties>
   </rule>
   <rule ref="SlevomatCodingStandard.Classes.RequireSelfReference"/>
+  <!-- treba spravit non ddd standards, ktory bude excludovat tieto sniffy -->
   <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
   <rule ref="SlevomatCodingStandard.Classes.SuperfluousErrorNaming"/>
   <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
   <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
-  <rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>   <!-- Tento by som asi povolil na rozdiel od tych zvysnych (su hned tu ^^^) -->
+  <rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
   <rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration"/>
   <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
     <properties>
@@ -296,22 +296,22 @@
     </properties>
   </rule>
   <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
-  <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/>             <!-- Ma toto zmysel? -->
+  <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/> <!-- treba zistit ci to podporuje anotacie napr. z JMS-->
   <rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
   <rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment"/>
   <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing"/>
   <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
-  <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">     <!-- autor uvadza aj dalsie obsolete a nepotrebne anotacie -->
+  <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
     <properties>
       <property name="forbiddenAnnotations" type="array">
-        <element value="@throws"/>
+        <element value="@throws"/> <!-- rozsirit o author a podobne veci -->
       </property>
     </properties>
   </rule>
   <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
   <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
   <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
-  <rule ref="SlevomatCodingStandard.Complexity.Cognitive"/>                   <!-- chceme checkovat komplexitu? -->
+  <rule ref="SlevomatCodingStandard.Complexity.Cognitive"/>
   <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
     <properties>
       <property name="controlStructures" type="array">
