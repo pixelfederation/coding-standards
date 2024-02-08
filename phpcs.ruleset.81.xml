@@ -118,7 +118,7 @@
     <properties>
       <property name="requiredSpacesBeforeColon" value="0"/>
     </properties>
-  </rule> 
+  </rule>
   <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
   <rule ref="Squiz.ControlStructures.ForLoopDeclaration">
     <properties>
@@ -227,22 +227,22 @@
 
         <element value="public static properties"/>
         <element value="public properties"/>
-    
+
         <element value="protected static properties"/>
         <element value="protected properties"/>
-        
+
         <element value="private static properties"/>
         <element value="private properties"/>
 
         <element value="constructor"/>
         <element value="static constructors"/>
-      
+
         <element value="all public methods"/> <!-- rozdelit aj na staticke metody -->
         <element value="all protected methods"/>
         <element value="all private methods"/>
 
         <element value="magic methods"/>  <!-- skusit zistit ci invoke nevieme nejako poriesit ze bude bez poradia -->
-        
+
         <element value="destructor"/>
       </property>
     </properties>
@@ -455,4 +455,6 @@
   <rule ref="SlevomatCodingStandard.Variables.UnusedVariable"/>
   <rule ref="SlevomatCodingStandard.Variables.UselessVariable"/>
   <rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
+
+  <rule ref="./src/Sniffs/RequireMultilineConstructorDeclarationSniff.php"/>
 </ruleset>
