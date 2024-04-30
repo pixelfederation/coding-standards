@@ -19,6 +19,7 @@
   <config name="testVersion" value="8.1"/>
   <config name="php_version" value="80100"/>
   <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility,vendor/slevomat/coding-standard"/>
+
   <exclude-pattern>tests/</exclude-pattern>
 
   <rule ref="PHPCompatibility"/>
@@ -47,6 +48,7 @@
   <rule ref="Generic.Functions.CallTimePassByReference"/>
   <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
   <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman">
+    <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
     <properties>
       <property name="checkFunctions" value="true"/>
       <property name="checkClosures" value="false"/>
@@ -106,7 +108,13 @@
   <rule ref="Generic.WhiteSpace.SpreadOperatorSpacingAfter"/>
 
   <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
-  <rule ref="Squiz.Arrays.ArrayDeclaration"/>
+  <rule ref="Squiz.Arrays.ArrayDeclaration">
+    <exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned"/>
+    <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned"/>
+    <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned"/>
+    <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned"/>
+    <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
+  </rule>
   <rule ref="Squiz.Classes.ClassDeclaration"/>
   <rule ref="Squiz.Classes.ClassFileName"/>
   <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
@@ -118,17 +126,22 @@
     <properties>
       <property name="requiredSpacesBeforeColon" value="0"/>
     </properties>
-  </rule> 
+  </rule>
   <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
   <rule ref="Squiz.ControlStructures.ForLoopDeclaration">
     <properties>
       <property name="ignoreNewlines" value="true"/>
     </properties>
   </rule>
-  <rule ref="Squiz.ControlStructures.InlineIfDeclaration"/>
+  <rule ref="Squiz.ControlStructures.InlineIfDeclaration">
+    <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NoBrackets"/>
+    <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine"/>
+  </rule>
   <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
   <rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
-  <rule ref="Squiz.Formatting.OperatorBracket"/>
+  <rule ref="Squiz.Formatting.OperatorBracket">
+    <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets"/>
+  </rule>
   <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
     <properties>
       <property name="equalsSpacing" value="1"/>
@@ -142,12 +155,21 @@
   <rule ref="Squiz.Functions.FunctionDuplicateArgument"/>
   <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
   <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
-  <rule ref="Squiz.NamingConventions.ValidFunctionName"/>
-  <rule ref="Squiz.NamingConventions.ValidVariableName"/>
-  <rule ref="Squiz.Operators.ComparisonOperatorUsage"/>
+  <rule ref="Squiz.NamingConventions.ValidFunctionName">
+    <exclude name="Squiz.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
+  </rule>
+  <rule ref="Squiz.NamingConventions.ValidVariableName">
+    <exclude name="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+  </rule>
+  <rule ref="Squiz.Operators.ComparisonOperatorUsage">
+    <exclude name="Squiz.Operators.ComparisonOperatorUsage.NotAllowed"/>
+    <exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
+  </rule>
   <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
   <rule ref="Squiz.Operators.ValidLogicalOperators"/>
-  <rule ref="Squiz.PHP.DisallowBooleanStatement"/>
+  <rule ref="Squiz.PHP.DisallowBooleanStatement">
+    <exclude name="Squiz.PHP.DisallowBooleanStatement.Found"/>
+  </rule>
   <rule ref="Squiz.PHP.DisallowComparisonAssignment"/>
   <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
   <rule ref="Squiz.PHP.EmbeddedPhp"/>
@@ -168,11 +190,14 @@
   <rule ref="Squiz.Strings.EchoedStrings"/>
   <rule ref="Squiz.WhiteSpace.CastSpacing"/>
   <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
-  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace"/>
+  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace">
+    <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
+  </rule>
   <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
   <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
   <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
   <rule ref="Squiz.WhiteSpace.MemberVarSpacing">
+    <exclude name="Squiz.WhiteSpace.MemberVarSpacing.Incorrect"/>
     <properties>
       <property name="spacing" value="0"/>
       <property name="spacingBeforeFirst" value="0"/>
@@ -214,7 +239,7 @@
   <rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing"/>
   <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
   <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing"/>
-  <rule ref="SlevomatCodingStandard.Classes.ClassStructure">      <!-- checknite poradie, nerozlisoval som poradie final, static, atd -->
+  <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
     <properties>
       <property name="groups" type="array">
         <element value="uses"/>
@@ -227,22 +252,35 @@
 
         <element value="public static properties"/>
         <element value="public properties"/>
-    
+
         <element value="protected static properties"/>
         <element value="protected properties"/>
-        
+
         <element value="private static properties"/>
         <element value="private properties"/>
 
         <element value="constructor"/>
         <element value="static constructors"/>
-      
-        <element value="all public methods"/> <!-- rozdelit aj na staticke metody -->
-        <element value="all protected methods"/>
-        <element value="all private methods"/>
 
-        <element value="magic methods"/>  <!-- skusit zistit ci invoke nevieme nejako poriesit ze bude bez poradia -->
-        
+        <element value="public static abstract methods"/>
+        <element value="public static final methods"/>
+        <element value="public static methods"/>
+        <element value="public abstract methods"/>
+        <element value="public final methods"/>
+        <element value="public methods"/>
+
+        <element value="protected static abstract methods"/>
+        <element value="protected static final methods"/>
+        <element value="protected static methods"/>
+        <element value="protected abstract methods"/>
+        <element value="protected final methods"/>
+        <element value="protected methods"/>
+
+        <element value="private static methods"/>
+        <element value="private methods"/>
+
+        <element value="magic methods"/>
+
         <element value="destructor"/>
       </property>
     </properties>
@@ -264,7 +302,6 @@
   <rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration">
     <properties>
       <property name="modifiersOrder" type="array">
-        <!-- <element value="final"/> --> <!-- Unsupported in version 8.12.1 -->
         <element value="public, protected, private"/>
         <element value="static"/>
         <element value="readonly"/>
@@ -278,11 +315,12 @@
   <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">
     <properties>
       <property name="minParametersCount" value="1"/>
-      <property name="includedMethodPatterns" value="__construct"/> <!-- pozriet nech to plati len pre __constructor  -->
+      <property name="includedMethodPatterns" type="array">
+        <element value="__construct"/>
+      </property>
     </properties>
   </rule>
   <rule ref="SlevomatCodingStandard.Classes.RequireSelfReference"/>
-  <!-- treba spravit non ddd standards, ktory bude excludovat tieto sniffy -->
   <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
   <rule ref="SlevomatCodingStandard.Classes.SuperfluousErrorNaming"/>
   <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
@@ -296,15 +334,18 @@
     </properties>
   </rule>
   <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
-  <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/> <!-- treba zistit ci to podporuje anotacie napr. z JMS-->
   <rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
   <rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment"/>
   <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing"/>
   <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
   <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+    <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden"/>
     <properties>
       <property name="forbiddenAnnotations" type="array">
-        <element value="@throws"/> <!-- rozsirit o author a podobne veci -->
+        <element value="@throws"/>
+        <element value="@author"/>
+        <element value="@copyright"/>
+        <element value="@license"/>
       </property>
     </properties>
   </rule>
@@ -324,14 +365,14 @@
   <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
   <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>
   <rule ref="SlevomatCodingStandard.ControlStructures.DisallowTrailingMultiLineTernaryOperator"/>
-  <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">     <!-- neviem ako nastavit premenne -->
+  <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">
     <properties>
       <property name="ignoreStandaloneIfInScope" value="false"/>
       <property name="ignoreOneLineTrailingIf" value="false"/>
       <property name="ignoreTrailingIfWithOneInstruction" value="false"/>
     </properties>
   </rule>
-  <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">           <!-- neviem ako nastavit premenne -->
+  <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
     <properties>
       <property name="linesCountBefore" value="1"/>
       <property name="linesCountBeforeFirst" value="0"/>
@@ -365,7 +406,7 @@
       <property name="allowMultiLine" value="true"/>
     </properties>
   </rule>
-  <rule ref="SlevomatCodingStandard.Functions.FunctionLength">     <!-- Chceme? -->
+  <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
     <properties>
       <property name="maxLinesLength" value="20"/>
     </properties>
@@ -376,17 +417,26 @@
   <rule ref="SlevomatCodingStandard.Functions.StaticClosure"/>
   <rule ref="SlevomatCodingStandard.Functions.StrictCall"/>
   <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure"/>
-  <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>
+  <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
+    <exclude name="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter"/>
+  </rule>
   <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
   <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
-  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation"/>
-  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation">
+    <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation.NonFullyQualifiedClassName"/>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions">
+    <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException"/>
+  </rule>
   <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants"/>
-  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions">
+    <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified"/>
+  </rule>
   <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
   <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
   <rule ref="SlevomatCodingStandard.Namespaces.NamespaceSpacing"/>
   <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+    <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFallbackGlobalName"/>
     <properties>
       <property name="searchAnnotations" value="true"/>
       <property name="allowFullyQualifiedExceptions" value="true"/>
