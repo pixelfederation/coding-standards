@@ -316,7 +316,7 @@
     <properties>
       <property name="minParametersCount" value="1"/>
       <property name="includedMethodPatterns" type="array">
-        <element value="__construct"/>
+        <element value="/^__construct$/"/>
       </property>
     </properties>
   </rule>
