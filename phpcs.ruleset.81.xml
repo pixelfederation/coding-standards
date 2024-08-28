@@ -24,7 +24,9 @@
 
   <rule ref="PHPCompatibility"/>
   <rule ref="PSR1"/>
-  <rule ref="PSR12"/>
+  <rule ref="PSR12">
+    <exclude name="Squiz.WhiteSpace.ScopeClosingBrace"/>
+  </rule>
 
   <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
   <rule ref="Generic.CodeAnalysis.EmptyPHPStatement"/>
@@ -214,7 +216,6 @@
       <property name="ignoreSpacingBeforeAssignments" value="false"/>
     </properties>
   </rule>
-  <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
   <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
   <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
   <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>

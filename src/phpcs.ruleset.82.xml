@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<ruleset name="PixelFederation">
-  <description>PixelFederation example rule set for PHP 8.2.</description>
-  <rule ref="../phpcs.ruleset.82.xml"/>
-</ruleset>
