@@ -22,7 +22,10 @@
 
   <exclude-pattern>tests/</exclude-pattern>
 
-  <rule ref="PHPCompatibility"/>
+  <rule ref="PHPCompatibility">
+    <exclude name="PHPCompatibility.Variables.ForbiddenThisUseContexts"/>
+  </rule>
+
   <rule ref="PSR1"/>
   <rule ref="PSR12">
     <exclude name="Squiz.WhiteSpace.ScopeClosingBrace"/>
@@ -116,13 +119,13 @@
     <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned"/>
     <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned"/>
     <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
+    <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed"/>
   </rule>
   <rule ref="Squiz.Classes.ClassDeclaration"/>
   <rule ref="Squiz.Classes.ClassFileName"/>
   <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
   <rule ref="Squiz.Classes.SelfMemberReference"/>
   <rule ref="Squiz.Classes.ValidClassName"/>
-  <rule ref="Squiz.Commenting.BlockComment"/>
   <rule ref="Squiz.Commenting.DocCommentAlignment"/>
   <rule ref="Squiz.ControlStructures.ControlSignature">
     <properties>
@@ -172,7 +175,6 @@
   <rule ref="Squiz.PHP.DisallowBooleanStatement">
     <exclude name="Squiz.PHP.DisallowBooleanStatement.Found"/>
   </rule>
-  <rule ref="Squiz.PHP.DisallowComparisonAssignment"/>
   <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
   <rule ref="Squiz.PHP.EmbeddedPhp"/>
   <rule ref="Squiz.PHP.GlobalKeyword"/>
@@ -354,15 +356,6 @@
   <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
   <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
   <rule ref="SlevomatCodingStandard.Complexity.Cognitive"/>
-  <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
-    <properties>
-      <property name="controlStructures" type="array">
-        <element value="try"/>
-        <element value="case"/>
-        <element value="default"/>
-      </property>
-    </properties>
-  </rule>
   <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
   <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>
   <rule ref="SlevomatCodingStandard.ControlStructures.DisallowTrailingMultiLineTernaryOperator"/>
@@ -403,7 +396,7 @@
   </rule>
   <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
     <properties>
-      <property name="spacesCountAfterKeyword" value="0"/>
+      <property name="spacesCountAfterKeyword" value="1"/>
       <property name="allowMultiLine" value="true"/>
     </properties>
   </rule>
@@ -429,7 +422,6 @@
   <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions">
     <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException"/>
   </rule>
-  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants"/>
   <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions">
     <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified"/>
   </rule>
@@ -495,7 +487,7 @@
   <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
   <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
     <properties>
-      <property name="withSpaces" value="yes"/>
+      <property name="withSpaces" value="no"/>
       <property name="shortNullable" value="yes"/>
       <property name="nullPosition" value="last"/>
     </properties>
