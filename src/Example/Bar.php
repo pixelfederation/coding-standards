@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PixelFederation\CodingStandards\Example\Php81;
+namespace PixelFederation\CodingStandards\Example;
 
 final class Bar
 {
