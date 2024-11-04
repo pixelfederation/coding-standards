@@ -1,15 +1,6 @@
 version: '3.5'
 
 services:
-  coding-standards-php7.4:
-    container_name: coding-standards-php7.4
-    build: ./docker/php7.4
-    volumes:
-      - .:/srv/www:delegated
-      - ~/.ssh:/var/www/.ssh
-    environment:
-      - COMPOSER_MEMORY_LIMIT=-1
-
   coding-standards-php8.1:
     container_name: coding-standards-php8.1
     build: ./docker/php8.1
