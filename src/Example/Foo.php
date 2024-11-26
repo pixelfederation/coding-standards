@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PixelFederation\CodingStandards\Example\Php81;
+namespace PixelFederation\CodingStandards\Example;
 
 final class Foo
 {
@@ -10,13 +10,8 @@ final class Foo
         private readonly Bar $bar,
     ) {}
 
-    public function baz(): int
+    public function multiply(): int
     {
         return $this->bar->width * $this->bar->height;
     }
 }
-
-$bar = new Bar(1, 2);
-$foo = new Foo($bar);
-
-print $foo->baz();

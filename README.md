@@ -21,7 +21,7 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
 
   <description>PixelFederation rule set.</description>
     
-  <config name="testVersion" value="7.2-7.4"/><!-- insert your php version -->
+  <config name="testVersion" value="8.1"/><!-- insert your php version -->
   <exclude-pattern>tests/</exclude-pattern>
   <rule ref="vendor/pixelfederation/coding-standards/phpcs.ruleset.xml">
     <!-- old projects may want to exclude these rules: -->
@@ -39,17 +39,6 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
       </property>
     </properties>
   </rule>
-
-  <!-- include for PHP 7.2- -->
-  <!--  <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall"/>-->
-
-  <!-- include for PHP 7.3+ -->
-  <!--  <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>-->
-  
-  <!-- include for PHP 7.4+ -->
-  <!--  <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>-->
-  <!--  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>-->
-
 </ruleset>
 ```
 
