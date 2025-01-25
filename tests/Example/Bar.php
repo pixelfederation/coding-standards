@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PixelFederation\CodingStandards\Example;
+namespace Tests\Example;
 
 final class Bar
 {

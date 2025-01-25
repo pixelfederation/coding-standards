@@ -4,9 +4,9 @@
     Reviewed version of the tools
     =============================
 
-    squizlabs/php_codesniffer: 3.7.2
+    squizlabs/php_codesniffer: 3.11.3
     phpcompatibility/php-compatibility: 9.3.5
-    slevomat/coding-standard: 8.12.1
+    slevomat/coding-standard: 8.15.0
   -->
 
   <description>PixelFederation ruleset for PHP 8.1.</description>
@@ -18,9 +18,9 @@
 
   <config name="testVersion" value="8.1"/>
   <config name="php_version" value="80100"/>
-  <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility,vendor/slevomat/coding-standard"/>
+  <config name="installed_paths" value="src/PixelFederationCodingStandard,vendor/phpcompatibility/php-compatibility,vendor/slevomat/coding-standard"/>
 
-  <exclude-pattern>tests/</exclude-pattern>
+  <rule ref="PixelFederationCodingStandard.ControlStructures.DisallowSwitchStatement"/>
 
   <rule ref="PHPCompatibility">
     <exclude name="PHPCompatibility.Variables.ForbiddenThisUseContexts"/>
@@ -35,6 +35,7 @@
   <rule ref="Generic.CodeAnalysis.EmptyPHPStatement"/>
   <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
   <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+  <rule ref="Generic.CodeAnalysis.RequireExplicitBooleanOperatorPrecedence"/>
   <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
   <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
   <rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
@@ -96,6 +97,7 @@
   <rule ref="Generic.PHP.LowerCaseType"/>
   <rule ref="Generic.PHP.RequireStrictTypes"/>
   <rule ref="Generic.PHP.Syntax"/>
+  <rule ref="Generic.Strings.UnnecessaryHeredoc"/>
   <rule ref="Generic.Strings.UnnecessaryStringConcat">
     <properties>
       <property name="allowMultiline" value="true"/>
@@ -107,6 +109,7 @@
     </properties>
   </rule>
   <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+  <rule ref="Generic.WhiteSpace.HereNowdocIdentifierSpacing"/>
   <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
   <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
   <rule ref="Generic.WhiteSpace.ScopeIndent"/>
@@ -143,7 +146,6 @@
     <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine"/>
   </rule>
   <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-  <rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
   <rule ref="Squiz.Formatting.OperatorBracket">
     <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets"/>
   </rule>
@@ -402,9 +404,10 @@
   </rule>
   <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
     <properties>
-      <property name="maxLinesLength" value="20"/>
+      <property name="maxLinesLength" value="35"/>
     </properties>
   </rule>
+  <rule ref="SlevomatCodingStandard.Functions.NamedArgumentSpacing"/>
   <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
   <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
   <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>

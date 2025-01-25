@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   coding-standards-php8.1:
     container_name: coding-standards-php8.1
@@ -22,6 +20,15 @@ services:
   coding-standards-php8.3:
     container_name: coding-standards-php8.3
     build: ./docker/php8.3
+    volumes:
+      - .:/srv/www:delegated
+      - ~/.ssh:/var/www/.ssh
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+
+  coding-standards-php8.4:
+    container_name: coding-standards-php8.4
+    build: ./docker/php8.4
     volumes:
       - .:/srv/www:delegated
       - ~/.ssh:/var/www/.ssh

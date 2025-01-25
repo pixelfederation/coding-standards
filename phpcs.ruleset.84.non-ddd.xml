@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ruleset name="PixelFederation">
-  <description>PixelFederation ruleset for PHP 8.3 (Non-DDD).</description>
+  <description>PixelFederation ruleset for PHP 8.4 (Non-DDD).</description>
 
-  <config name="testVersion" value="8.3"/>
-  <config name="php_version" value="80300"/>
+  <config name="testVersion" value="8.4"/>
+  <config name="php_version" value="80400"/>
 
-  <rule ref="./phpcs.ruleset.83.xml">
+  <rule ref="./phpcs.ruleset.84.xml">
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousErrorNaming"/>
     <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
