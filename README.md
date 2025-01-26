@@ -3,41 +3,48 @@
 This package provides PHPCS rule set for coding standards in Pixel Federation. It should be included into
 each project maintained by Pixel Federation that uses PHP Code Sniffer [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer).
 
-## Example usage
+## Migration from v4 to v5
+Generic ruleset was removed. Now there are only rulesets for specific PHP versions.
 
-### 1) Install composer dependencies
+Replace (in your ruleset) reference to file
+```vendor/pixelfederation/coding-standards/phpcs.ruleset.xml``` 
+with 
+```vendor/pixelfederation/coding-standards/phpcs.ruleset.84.xml```
+for PHP 8.4.
+
+## How to use
+
+### Install composer dependencies
 
 ```bash
-composer require pixelfederation/coding-standards:^2.0 --dev
+composer require --dev pixelfederation/coding-standards:^5.0
 ```
 
-### 2) Ruleset creation
+### Supported versions
 
-Create a file named `phpcs.ruleset.xml` to the root folder of your project with the following content:
+For each php version there are 2 versions of the ruleset. One for DDD projects and one for Non-DDD projects.
+
+For example for PHP 8.4:
+```
+vendor/pixelfederation/coding-standards/phpcs.ruleset.84.xml
+OR
+vendor/pixelfederation/coding-standards/phpcs.ruleset.84.non-ddd.xml
+```
+
+### Ruleset creation
+
+Create a file named `phpcs.ruleset.xml` in the root folder of your project with the following content:
 
 ```xml
 <?xml version="1.0"?>
 <ruleset name="PixelFederation">
-
   <description>PixelFederation rule set.</description>
     
-  <config name="testVersion" value="8.1"/><!-- insert your php version -->
   <exclude-pattern>tests/</exclude-pattern>
-  <rule ref="vendor/pixelfederation/coding-standards/phpcs.ruleset.xml">
-    <!-- old projects may want to exclude these rules: -->
-    <!-- <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/> -->
-    <!-- <exclude name="SlevomatCodingStandard.Files.FunctionLength"/> -->
-  </rule>
 
-  <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
-    <properties>
-      <property name="rootNamespaces" type="array">
-        <element key="src" value="Your\Root\Namespace"/><!-- add your namespaces -->
-      </property>
-    </properties>
+  <rule ref="vendor/pixelfederation/coding-standards/phpcs.ruleset.84.xml"> <!-- Insert version for your php version -->
+    <!-- You can exclude some rules here -->
+    <exclude name="SlevomatCodingStandard.Files.FunctionLength"/> 
   </rule>
 </ruleset>
 ```
@@ -47,7 +54,7 @@ Create a file named `phpcs.ruleset.xml` to the root folder of your project with 
 In your project directory run this command:
 
 ```bash
-vendor/bin/phpcs --standard=phpcs.ruleset.xml --extensions=php --tab-width=4 -sp src
+vendor/bin/phpcs --standard=phpcs.ruleset.xml src
 ```
 
 ### Automatically fixing errors
@@ -55,7 +62,7 @@ vendor/bin/phpcs --standard=phpcs.ruleset.xml --extensions=php --tab-width=4 -sp
 In your project directory run this command:
 
 ```bash
-vendor/bin/phpcbf --standard=phpcs.ruleset.xml --extensions=php --tab-width=4 -sp src
+vendor/bin/phpcbf --standard=phpcs.ruleset.xml src
 ```
 
 ## Additional links
