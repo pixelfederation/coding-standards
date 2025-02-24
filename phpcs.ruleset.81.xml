@@ -371,11 +371,8 @@
     <properties>
       <property name="linesCountBefore" value="1"/>
       <property name="linesCountBeforeFirst" value="0"/>
-      <property name="linesCountBeforeWhenFirstInCaseOrDefault" value="null"/>
       <property name="linesCountAfter" value="1"/>
       <property name="linesCountAfterLast" value="0"/>
-      <property name="linesCountAfterWhenLastInCaseOrDefault" value="null"/>
-      <property name="linesCountAfterWhenLastInLastCaseOrDefault" value="null"/>
       <property name="allowSingleLineYieldStacking" value="true"/>
     </properties>
   </rule>
