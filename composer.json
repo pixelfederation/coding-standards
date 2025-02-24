@@ -1,51 +1,60 @@
 {
   "name": "pixelfederation/coding-standards",
-  "homepage": "https://github.com/pixelfederation/coding-standards",
-  "type": "library",
   "description": "Standardized PHPCS sniffs for backend developers.",
   "license": "BSD-3-Clause",
-
+  "type": "library",
   "authors": [
     {
       "name": "Martin Fris",
       "email": "mfris@pixelfederation.com"
     }
   ],
-
+  "homepage": "https://github.com/pixelfederation/coding-standards",
   "require": {
     "php": "^8.1",
     "phpcompatibility/php-compatibility": "^9.3.5",
-    "slevomat/coding-standard": "^8.15.0",
+    "slevomat/coding-standard": "^8.16.0",
     "squizlabs/php_codesniffer": "^3.7.2"
   },
-
+  "require-dev": {
+    "ergebnis/composer-normalize": "^2.45"
+  },
   "autoload": {
     "psr-4": {
       "PixelFederation\\CodingStandards\\": "src/"
     }
   },
-
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": ["tests/"]
+      "Tests\\": [
+        "tests/"
+      ]
     }
   },
-
   "config": {
-    "sort-packages": true,
     "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true
+    },
+    "sort-packages": true
   },
-
   "scripts": {
-    "phpcs8.1": "phpcs --standard=phpcs.ruleset.81.xml tests/Example",
-    "phpcs8.2": "phpcs --standard=phpcs.ruleset.82.xml tests/Example",
-    "phpcs8.3": "phpcs --standard=phpcs.ruleset.83.xml tests/Example",
-    "phpcs8.4": "phpcs --standard=phpcs.ruleset.84.xml tests/Example",
+    "post-install-cmd": [
+      "@auto-scripts"
+    ],
+    "post-update-cmd": [
+      "@auto-scripts"
+    ],
+    "auto-scripts": {
+      "normalizer": "composer normalize"
+    },
     "phpcbf8.1": "phpcbf --standard=phpcs.ruleset.81.xml tests/Example",
     "phpcbf8.2": "phpcbf --standard=phpcs.ruleset.82.xml tests/Example",
     "phpcbf8.3": "phpcbf --standard=phpcs.ruleset.83.xml tests/Example",
-    "phpcbf8.4": "phpcbf --standard=phpcs.ruleset.84.xml tests/Example"
+    "phpcbf8.4": "phpcbf --standard=phpcs.ruleset.84.xml tests/Example",
+    "phpcs8.1": "phpcs --standard=phpcs.ruleset.81.xml tests/Example",
+    "phpcs8.2": "phpcs --standard=phpcs.ruleset.82.xml tests/Example",
+    "phpcs8.3": "phpcs --standard=phpcs.ruleset.83.xml tests/Example",
+    "phpcs8.4": "phpcs --standard=phpcs.ruleset.84.xml tests/Example"
   }
 }
