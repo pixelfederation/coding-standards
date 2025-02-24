@@ -4,9 +4,9 @@
     Reviewed version of the tools
     =============================
 
-    squizlabs/php_codesniffer: 3.7.2
+    squizlabs/php_codesniffer: 3.11.3
     phpcompatibility/php-compatibility: 9.3.5
-    slevomat/coding-standard: 8.12.1
+    slevomat/coding-standard: 8.16.0
   -->
 
   <description>PixelFederation ruleset for PHP 8.1.</description>
@@ -18,9 +18,9 @@
 
   <config name="testVersion" value="8.1"/>
   <config name="php_version" value="80100"/>
-  <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility,vendor/slevomat/coding-standard"/>
+  <config name="installed_paths" value="src/PixelFederationCodingStandard,vendor/phpcompatibility/php-compatibility,vendor/slevomat/coding-standard"/>
 
-  <exclude-pattern>tests/</exclude-pattern>
+  <rule ref="PixelFederationCodingStandard.ControlStructures.DisallowSwitchStatement"/>
 
   <rule ref="PHPCompatibility">
     <exclude name="PHPCompatibility.Variables.ForbiddenThisUseContexts"/>
@@ -35,9 +35,9 @@
   <rule ref="Generic.CodeAnalysis.EmptyPHPStatement"/>
   <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
   <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+  <rule ref="Generic.CodeAnalysis.RequireExplicitBooleanOperatorPrecedence"/>
   <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
   <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
-  <rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
   <rule ref="Generic.Files.EndFileNewline"/>
   <rule ref="Generic.Files.InlineHTML"/>
   <rule ref="Generic.Files.LineEndings"/>
@@ -96,6 +96,7 @@
   <rule ref="Generic.PHP.LowerCaseType"/>
   <rule ref="Generic.PHP.RequireStrictTypes"/>
   <rule ref="Generic.PHP.Syntax"/>
+  <rule ref="Generic.Strings.UnnecessaryHeredoc"/>
   <rule ref="Generic.Strings.UnnecessaryStringConcat">
     <properties>
       <property name="allowMultiline" value="true"/>
@@ -107,6 +108,7 @@
     </properties>
   </rule>
   <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+  <rule ref="Generic.WhiteSpace.HereNowdocIdentifierSpacing"/>
   <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
   <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
   <rule ref="Generic.WhiteSpace.ScopeIndent"/>
@@ -143,7 +145,6 @@
     <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine"/>
   </rule>
   <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-  <rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
   <rule ref="Squiz.Formatting.OperatorBracket">
     <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets"/>
   </rule>
@@ -264,6 +265,7 @@
 
         <element value="constructor"/>
         <element value="static constructors"/>
+        <element value="invoke method"/>
 
         <element value="public static abstract methods"/>
         <element value="public static final methods"/>
@@ -370,11 +372,8 @@
     <properties>
       <property name="linesCountBefore" value="1"/>
       <property name="linesCountBeforeFirst" value="0"/>
-      <property name="linesCountBeforeWhenFirstInCaseOrDefault" value="null"/>
       <property name="linesCountAfter" value="1"/>
       <property name="linesCountAfterLast" value="0"/>
-      <property name="linesCountAfterWhenLastInCaseOrDefault" value="null"/>
-      <property name="linesCountAfterWhenLastInLastCaseOrDefault" value="null"/>
       <property name="allowSingleLineYieldStacking" value="true"/>
     </properties>
   </rule>
@@ -402,9 +401,10 @@
   </rule>
   <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
     <properties>
-      <property name="maxLinesLength" value="20"/>
+      <property name="maxLinesLength" value="35"/>
     </properties>
   </rule>
+  <rule ref="SlevomatCodingStandard.Functions.NamedArgumentSpacing"/>
   <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
   <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
   <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
@@ -476,7 +476,16 @@
       <property name="spacesCountAroundEqualsSign" value="0"/>
     </properties>
   </rule>
+  <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint"/>
   <rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
+  <rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
+    <properties>
+      <property name="withSpacesAroundOperators" value="no"/>
+      <property name="withSpacesInsideParentheses" value="no"/>
+      <property name="shortNullable" value="yes"/>
+      <property name="nullPosition" value="last"/>
+    </properties>
+  </rule>
   <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
   <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
   <rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition"/>
@@ -485,13 +494,6 @@
   <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
   <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
   <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
-  <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
-    <properties>
-      <property name="withSpaces" value="no"/>
-      <property name="shortNullable" value="yes"/>
-      <property name="nullPosition" value="last"/>
-    </properties>
-  </rule>
   <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
   <rule ref="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable"/>
   <rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
