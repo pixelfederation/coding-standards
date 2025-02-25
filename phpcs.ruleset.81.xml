@@ -18,7 +18,7 @@
 
   <config name="testVersion" value="8.1"/>
   <config name="php_version" value="80100"/>
-  <config name="installed_paths" value="src/PixelFederationCodingStandard,vendor/phpcompatibility/php-compatibility,vendor/slevomat/coding-standard"/>
+  <config name="installed_paths" value="src/PixelFederationCodingStandard,vendor/pixelfederation/coding-standards/src/PixelFederationCodingStandard,vendor/phpcompatibility/php-compatibility,vendor/slevomat/coding-standard"/>
 
   <rule ref="PixelFederationCodingStandard.ControlStructures.DisallowSwitchStatement"/>
 
