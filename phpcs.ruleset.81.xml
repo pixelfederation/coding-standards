@@ -50,7 +50,6 @@
   <rule ref="Generic.Files.OneObjectStructurePerFile"/>
   <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
   <rule ref="Generic.Formatting.SpaceAfterCast"/>
-  <rule ref="Generic.Functions.CallTimePassByReference"/>
   <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
   <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman">
     <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
@@ -199,7 +198,6 @@
     <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
   </rule>
   <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
-  <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
   <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
   <rule ref="Squiz.WhiteSpace.MemberVarSpacing">
     <exclude name="Squiz.WhiteSpace.MemberVarSpacing.Incorrect"/>
