@@ -33,7 +33,9 @@
 
   <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
   <rule ref="Generic.CodeAnalysis.EmptyPHPStatement"/>
-  <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
+  <rule ref="Generic.CodeAnalysis.EmptyStatement">
+    <exclude name="Generic.CodeAnalysis.EmptyStatement.DetectedCatch"/>
+  </rule>
   <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
   <rule ref="Generic.CodeAnalysis.RequireExplicitBooleanOperatorPrecedence"/>
   <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
@@ -41,12 +43,6 @@
   <rule ref="Generic.Files.EndFileNewline"/>
   <rule ref="Generic.Files.InlineHTML"/>
   <rule ref="Generic.Files.LineEndings"/>
-  <rule ref="Generic.Files.LineLength">
-    <properties>
-      <property name="lineLimit" value="120"/>
-      <property name="absoluteLineLimit" value="120"/>
-    </properties>
-  </rule>
   <rule ref="Generic.Files.OneObjectStructurePerFile"/>
   <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
   <rule ref="Generic.Formatting.SpaceAfterCast"/>
