@@ -5,6 +5,7 @@ services:
     volumes:
       - .:/srv/www:delegated
       - ~/.ssh:/var/www/.ssh
+      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
 
@@ -14,6 +15,7 @@ services:
     volumes:
       - .:/srv/www:delegated
       - ~/.ssh:/var/www/.ssh
+      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
 
@@ -23,6 +25,7 @@ services:
     volumes:
       - .:/srv/www:delegated
       - ~/.ssh:/var/www/.ssh
+      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
 
@@ -32,5 +35,6 @@ services:
     volumes:
       - .:/srv/www:delegated
       - ~/.ssh:/var/www/.ssh
+      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
