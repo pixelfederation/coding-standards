@@ -3,7 +3,7 @@
 This package provides PHPCS rule set for coding standards in Pixel Federation. It should be included into
 each project maintained by Pixel Federation that uses PHP Code Sniffer [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer).
 
-## Migration from v4 to v5
+## Migration from v4 to v4.1.0
 Generic ruleset was removed. Now there are only rulesets for specific PHP versions.
 
 Replace (in your ruleset) reference to file
