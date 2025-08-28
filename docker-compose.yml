@@ -4,8 +4,6 @@ services:
     build: ./docker/php8.1
     volumes:
       - .:/srv/www:delegated
-      - ~/.ssh:/var/www/.ssh
-      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
 
@@ -14,8 +12,6 @@ services:
     build: ./docker/php8.2
     volumes:
       - .:/srv/www:delegated
-      - ~/.ssh:/var/www/.ssh
-      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
 
@@ -24,8 +20,6 @@ services:
     build: ./docker/php8.3
     volumes:
       - .:/srv/www:delegated
-      - ~/.ssh:/var/www/.ssh
-      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
 
@@ -34,7 +28,5 @@ services:
     build: ./docker/php8.4
     volumes:
       - .:/srv/www:delegated
-      - ~/.ssh:/var/www/.ssh
-      - ~/.composer:/.composer
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
