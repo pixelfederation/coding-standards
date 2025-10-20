@@ -3,6 +3,7 @@ services:
     container_name: coding-standards-php8.1
     build: ./docker/php8.1
     volumes:
+      - .gitconfig:/root/.gitconfig
       - .:/srv/www:delegated
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
@@ -11,6 +12,7 @@ services:
     container_name: coding-standards-php8.2
     build: ./docker/php8.2
     volumes:
+      - .gitconfig:/root/.gitconfig
       - .:/srv/www:delegated
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
@@ -19,6 +21,7 @@ services:
     container_name: coding-standards-php8.3
     build: ./docker/php8.3
     volumes:
+      - .gitconfig:/root/.gitconfig
       - .:/srv/www:delegated
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
@@ -27,6 +30,7 @@ services:
     container_name: coding-standards-php8.4
     build: ./docker/php8.4
     volumes:
+      - .gitconfig:/root/.gitconfig
       - .:/srv/www:delegated
     environment:
       - COMPOSER_MEMORY_LIMIT=-1

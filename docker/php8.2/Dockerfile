@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2.29-cli
 
 RUN apt-get update && apt-get install -y git-core zlib1g-dev libzip-dev zip unzip
 RUN docker-php-ext-install zip
@@ -10,3 +10,5 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     unlink composer-setup.php
 
 WORKDIR /srv/www
+
+CMD ["tail", "-f", "/dev/null"]
