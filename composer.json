@@ -12,9 +12,8 @@
   "homepage": "https://github.com/pixelfederation/coding-standards",
   "require": {
     "php": "^8.1",
-    "phpcompatibility/php-compatibility": "^9.3",
-    "slevomat/coding-standard": "^8.18",
-    "squizlabs/php_codesniffer": "^3.13"
+    "slevomat/coding-standard": "^8.24",
+    "squizlabs/php_codesniffer": "^4.0"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2.45"
