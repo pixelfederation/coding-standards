@@ -11,7 +11,7 @@
   ],
   "homepage": "https://github.com/pixelfederation/coding-standards",
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "slevomat/coding-standard": "^8.24",
     "squizlabs/php_codesniffer": "^4.0"
   },
