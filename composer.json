@@ -11,7 +11,7 @@
   ],
   "homepage": "https://github.com/pixelfederation/coding-standards",
   "require": {
-    "php": "^8.1",
+    "php": "^8.3",
     "slevomat/coding-standard": "^8.24",
     "squizlabs/php_codesniffer": "^4.0"
   },
@@ -47,12 +47,8 @@
     "auto-scripts": {
       "normalizer": "composer normalize"
     },
-    "phpcbf8.1": "phpcbf --standard=phpcs.ruleset.81.xml tests/Example",
-    "phpcbf8.2": "phpcbf --standard=phpcs.ruleset.82.xml tests/Example",
     "phpcbf8.3": "phpcbf --standard=phpcs.ruleset.83.xml tests/Example",
     "phpcbf8.4": "phpcbf --standard=phpcs.ruleset.84.xml tests/Example",
-    "phpcs8.1": "phpcs --standard=phpcs.ruleset.81.xml tests/Example",
-    "phpcs8.2": "phpcs --standard=phpcs.ruleset.82.xml tests/Example",
     "phpcs8.3": "phpcs --standard=phpcs.ruleset.83.xml tests/Example",
     "phpcs8.4": "phpcs --standard=phpcs.ruleset.84.xml tests/Example"
   }

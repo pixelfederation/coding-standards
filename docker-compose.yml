@@ -1,36 +1,27 @@
+x-php-common: &php_common
+  volumes:
+    - .gitconfig:/root/.gitconfig
+    - .:/srv/www:delegated
+  environment:
+    COMPOSER_MEMORY_LIMIT: -1
+
+x-php-build: &php_build
+  context: ./
+  dockerfile: ./docker/php/Dockerfile
+
 services:
-  coding-standards-php8.1:
-    container_name: coding-standards-php8.1
-    build: ./docker/php8.1
-    volumes:
-      - .gitconfig:/root/.gitconfig
-      - .:/srv/www:delegated
-    environment:
-      - COMPOSER_MEMORY_LIMIT=-1
-
-  coding-standards-php8.2:
-    container_name: coding-standards-php8.2
-    build: ./docker/php8.2
-    volumes:
-      - .gitconfig:/root/.gitconfig
-      - .:/srv/www:delegated
-    environment:
-      - COMPOSER_MEMORY_LIMIT=-1
-
   coding-standards-php8.3:
+    <<: *php_common
     container_name: coding-standards-php8.3
-    build: ./docker/php8.3
-    volumes:
-      - .gitconfig:/root/.gitconfig
-      - .:/srv/www:delegated
-    environment:
-      - COMPOSER_MEMORY_LIMIT=-1
+    build:
+      <<: *php_build
+      args:
+        PHP_VERSION: 8.3
 
   coding-standards-php8.4:
+    <<: *php_common
     container_name: coding-standards-php8.4
-    build: ./docker/php8.4
-    volumes:
-      - .gitconfig:/root/.gitconfig
-      - .:/srv/www:delegated
-    environment:
-      - COMPOSER_MEMORY_LIMIT=-1
+    build:
+      <<: *php_build
+      args:
+        PHP_VERSION: 8.4

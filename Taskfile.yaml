@@ -53,24 +53,6 @@ tasks:
       - ds
 
   # PHP containers
-  container:php81:
-    cmds:
-      - task: docker:exec
-        vars:
-          CONTAINER: coding-standards-php8.1
-          COMMAND: '{{default "/bin/bash" .CLI_ARGS}}'
-    aliases:
-      - php81
-
-  container:php82:
-    cmds:
-      - task: docker:exec
-        vars:
-          CONTAINER: coding-standards-php8.2
-          COMMAND: '{{default "/bin/bash" .CLI_ARGS}}'
-    aliases:
-      - php82
-
   container:php83:
     cmds:
       - task: docker:exec
