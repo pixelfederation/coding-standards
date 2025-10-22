@@ -1,0 +1,72 @@
+version: '3'
+
+tasks:
+  # Application
+  app:up:
+    desc: Application startup
+    cmds:
+      - task: docker:compose:rebuild
+        vars:
+          ARGS: --no-interaction
+    aliases:
+      - up
+
+  app:down:
+    desc: Application shutdown
+    cmds:
+      - task: docker:compose
+        vars:
+          COMMAND: down --remove-orphans
+    aliases:
+      - down
+
+  # Docker
+  docker:exec:
+    desc: Execute command in a docker container
+    cmds:
+      - docker exec -it {{default "coding-standards-php8.4" .CONTAINER}} {{default "/bin/bash" .COMMAND}}
+
+  docker:compose:
+    desc: Run docker compose command
+    cmds:
+      - docker compose {{default "version" .COMMAND}}
+
+  docker:compose:rebuild:
+    desc: Rebuild docker containers
+    cmds:
+      - task: docker:compose
+        vars:
+          COMMAND: down --remove-orphans
+      - task: docker:compose
+        vars:
+          COMMAND: up -d --build --remove-orphans
+    aliases:
+      - dr
+
+  docker:compose:services:
+    desc: Show docker compose services
+    cmds:
+      - task: docker:compose
+        vars:
+          COMMAND: ps -a --no-trunc
+    aliases:
+      - ds
+
+  # PHP containers
+  container:php83:
+    cmds:
+      - task: docker:exec
+        vars:
+          CONTAINER: coding-standards-php8.3
+          COMMAND: '{{default "/bin/bash" .CLI_ARGS}}'
+    aliases:
+      - php83
+
+  container:php84:
+    cmds:
+      - task: docker:exec
+        vars:
+          CONTAINER: coding-standards-php8.4
+          COMMAND: '{{default "/bin/bash" .CLI_ARGS}}'
+    aliases:
+      - php84

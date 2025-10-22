@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<ruleset name="PixelFederation">
-  <description>PixelFederation ruleset for PHP 8.2.</description>
-
-  <config name="testVersion" value="8.2"/>
-  <config name="php_version" value="80200"/>
-
-  <rule ref="./phpcs.ruleset.81.xml"/>
-</ruleset>
