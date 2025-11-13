@@ -157,7 +157,7 @@ With this parameter you can skip checking if property types match the Doctrine t
 grumphp:
     tasks:
         composer_install_check:
-            script: './bin/composer_install_check.sh',
+            script: './vendor/pixelfederation/coding-standards/bin/composer_install_check.sh',
             ignore_patterns: []
             triggered_by: ['php', 'yml', 'yaml', 'xml']
             whitelist_patterns: []

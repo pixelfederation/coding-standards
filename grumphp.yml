@@ -13,6 +13,7 @@ grumphp:
     composer: ~
     composer_normalize: ~
     composer_install_check:
+      script: './bin/composer_install_check.sh'
       metadata:
         priority: 900
     jsonlint: ~
