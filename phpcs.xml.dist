@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+    <arg name="basepath" value="."/>
+    <arg name="no-cache" />
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+
+    <config name="testVersion" value="8.3" />
+
+    <file>config/</file>
+    <file>src/</file>
+
+    <exclude-pattern>vendor/</exclude-pattern>
+
+    <rule ref="phpcs.ruleset.83.non-ddd.xml"/>
+
+    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+        <properties>
+            <property name="rootNamespaces" type="array">
+                <element key="src" value="PixelFederation\CodingStandards"/>
+                <element key="tests" value="PixelFederation\CodingStandards\Tests"/>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.PHP.UselessParentheses">
+        <properties>
+            <property name="enableCheckAroundNew" value="false"/>
+        </properties>
+    </rule>
+</ruleset>

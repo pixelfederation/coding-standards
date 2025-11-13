@@ -1,0 +1,9 @@
+parameters:
+    treatPhpDocTypesAsCertain: false
+    level: max
+    paths:
+        - config/
+        - src/
+        - tests/
+    scanDirectories:
+      - vendor/squizlabs/php_codesniffer/src
