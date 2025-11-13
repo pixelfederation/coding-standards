@@ -1,0 +1,16 @@
+services:
+  PixelFederation\CodingStandards\GrumPHP\Task\DoctrineSchemaValidateTask:
+    class: PixelFederation\CodingStandards\GrumPHP\Task\DoctrineSchemaValidateTask
+    arguments:
+      - "@process_builder"
+      - "@formatter.raw_process"
+    tags:
+      - { name: grumphp.task, task: doctrine_schema_validate }
+
+  PixelFederation\CodingStandards\GrumPHP\Task\ComposerInstallCheckTask:
+    class: PixelFederation\CodingStandards\GrumPHP\Task\ComposerInstallCheckTask
+    arguments:
+      - "@process_builder"
+      - "@formatter.raw_process"
+    tags:
+      - { name: grumphp.task, task: composer_install_check }
