@@ -81,10 +81,19 @@ final class PhpMdExtendedTask extends AbstractExternalTask
         }
 
         $chunks = array_chunk($files->toArray(), $chunkSize);
-        foreach ($chunks as $chunk) {
+        $totalChunks = count($chunks);
+        foreach ($chunks as $index => $chunk) {
             $process = $this->processChunk(new FilesCollection($chunk), $config);
             if (!$process->isSuccessful()) {
-                return TaskResult::createFailed($this, $context, $this->formatter->format($process));
+                $message = sprintf(
+                    'Chunk %d/%d failed:%s%s',
+                    $index + 1,
+                    $totalChunks,
+                    PHP_EOL,
+                    $this->formatter->format($process),
+                );
+
+                return TaskResult::createFailed($this, $context, $message);
             }
         }
 
