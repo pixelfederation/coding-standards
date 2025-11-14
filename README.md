@@ -191,7 +191,7 @@ This is a list of regex patterns that will filter files to validate. With this o
 
 ### PhpMd Extended
 
-The PhpMd task will sniff your code for bad coding standards.
+Extends the default PhpMd task and splits the files into smaller chunks to prevent the `Argument list too long` error.
 
 ***Composer***
 
