@@ -201,7 +201,7 @@ composer require --dev phpmd/phpmd
 
 ***Config***
 
-The task lives under the `phpmd` namespace and has following configurable parameters:
+The task lives under the `phpmd_extended` namespace and has following configurable parameters:
 
 ```yaml
 # grumphp.yml
