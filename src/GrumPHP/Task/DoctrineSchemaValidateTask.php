@@ -66,7 +66,7 @@ final class DoctrineSchemaValidateTask extends AbstractExternalTask
         $config = $this->getConfig()->getOptions();
         $files = $context->getFiles()->extensions($config['triggered_by']);
 
-        if (0 === \count($files)) {
+        if (count($files) === 0) {
             return TaskResult::createSkipped($this, $context);
         }
 
@@ -79,9 +79,9 @@ final class DoctrineSchemaValidateTask extends AbstractExternalTask
         if (is_bool($skipPropertyTypes)) {
             $arguments->addOptionalArgument('--skip-property-types', $config['skip_property_types']);
         }
-        $em = $config['em'] ?? null;
-        if (is_string($em)) {
-            $arguments->addOptionalArgument('--em=%s', $em);
+        $entityManger = $config['em'] ?? null;
+        if (is_string($entityManger)) {
+            $arguments->addOptionalArgument('--em=%s', $entityManger);
         }
 
         $process = $this->processBuilder->buildProcess($arguments);

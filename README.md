@@ -188,3 +188,76 @@ This is a list of extensions to be sniffed.
 *Default: []*
 
 This is a list of regex patterns that will filter files to validate. With this option you can skip files like tests. This option is used in relation with the parameter `triggered_by`.
+
+### PhpMd Extended
+
+Extends the default PhpMd task and splits the files into smaller chunks to prevent the `Argument list too long` error.
+
+***Composer***
+
+```
+composer require --dev phpmd/phpmd
+```
+
+***Config***
+
+The task lives under the `phpmd_extended` namespace and has following configurable parameters:
+
+```yaml
+# grumphp.yml
+grumphp:
+    tasks:
+        phpmd_extended:
+            whitelist_patterns: []
+            exclude: []
+            report_format: text
+            ruleset: ['cleancode', 'codesize', 'naming']
+            triggered_by: ['php']
+            chunks_size: 1000
+```
+
+**whitelist_patterns**
+
+*Default: []*
+
+This is a list of regex patterns that will filter files to validate. With this option you can skip files like tests. This option is used in relation with the parameter `triggered_by`.
+For example: whitelist files in `src/FolderA/` and `src/FolderB/` you can use
+```yaml
+whitelist_patterns:
+    - /^src\/FolderA\/(.*)/
+    - /^src\/FolderB\/(.*)/
+```
+
+**exclude**
+
+*Default: []*
+
+This is a list of patterns that will be ignored by phpmd. With this option you can skip directories like tests. Leave this option blank to run phpmd for every php file.
+
+**report_format**
+
+*Default: text*
+
+This sets the output [renderer](https://phpmd.org/documentation/#renderers) of phpmd.
+Available formats: ansi, text.
+
+**ruleset**
+
+*Default: [cleancode,codesize,naming]*
+
+With this parameter you will be able to configure the rule/rulesets you want to use. You can use the standard
+sets provided by PhpMd or you can configure your own xml configuration as described in the [PhpMd Documentation](https://phpmd.org/documentation/creating-a-ruleset.html)
+
+The full list of rules/rulesets can be found at [PhpMd Rules](https://phpmd.org/rules/index.html)
+
+**triggered_by**
+
+*Default: [php]*
+
+This is a list of extensions to be sniffed.
+
+**chunk_size**
+
+*Default: 1000*
+
+This parameter defines how many files will be checked in one execution of phpmd. This can help with performance on large codebases.

@@ -36,6 +36,8 @@ grumphp:
       diff: true
       triggered_by: [ 'php' ]
     phplint: ~
+    phpmd_extended:
+      ruleset: [ 'phpmd.dist.xml' ]
     phpparser:
       ignore_patterns: [ ]
       php_version: '8.3'
