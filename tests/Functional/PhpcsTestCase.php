@@ -8,8 +8,12 @@ use PHPUnit\Framework\TestCase;
 
 abstract class PhpcsTestCase extends TestCase
 {
-    public static function assertPhpcbf(string $fileBefore, string $fileAfter, string $message = ''): void
-    {
+    public static function assertPhpcbf(
+        string $fileBefore,
+        string $fileAfter,
+        string $message = '',
+        string $tmpFilename = 'Bar.php',
+    ): void {
         $before = __DIR__ . '/' . $fileBefore;
         $expected = __DIR__ . '/' . $fileAfter;
 
@@ -19,7 +23,7 @@ abstract class PhpcsTestCase extends TestCase
         $tmpDir = sys_get_temp_dir() . '/cs_bar_' . bin2hex(random_bytes(4));
         self::assertTrue(mkdir($tmpDir, 0777, true), $message);
 
-        $tmpFile = $tmpDir . '/Bar.php';
+        $tmpFile = $tmpDir . '/' . $tmpFilename;
         self::assertNotFalse($tmpFile, $message);
         file_put_contents($tmpFile, file_get_contents($before));
 
@@ -43,7 +47,6 @@ abstract class PhpcsTestCase extends TestCase
             'Expected PHPCBF to change the file, but contents are identical.' . $message,
         );
 
-        $actual = file_get_contents($tmpFile);
         self::assertSame(
             file_get_contents($expected),
             $actual,
