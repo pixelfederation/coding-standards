@@ -215,6 +215,18 @@
   <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
     <severity>5</severity>
   </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+    <severity>5</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+    <severity>5</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.BeforeOpenBrace">
+    <severity>5</severity>
+  </rule>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.BeforeCloseBrace">
+    <severity>5</severity>
+  </rule>
 
   <rule ref="Zend.Files.ClosingTag"/>
 
