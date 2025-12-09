@@ -17,12 +17,17 @@ grumphp:
       metadata:
         priority: 900
     jsonlint: ~
+    phpunit:
+      always_execute: true
+      config_file: phpunit.xml
     phpcs:
       standard: 'phpcs.xml.dist'
       tab_width: 4
       whitelist_patterns: [ ]
       encoding: utf-8
-      ignore_patterns: [ ]
+      ignore_patterns: [
+        'tests/Functional',
+      ]
       sniffs: [ ]
       triggered_by: [ 'php' ]
       show_sniffs_error_path: true
