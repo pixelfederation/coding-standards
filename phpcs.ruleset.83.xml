@@ -227,6 +227,9 @@
   <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.BeforeCloseBrace">
     <severity>5</severity>
   </rule>
+  <rule ref="Generic.Files.EndFileNewline">
+    <severity>5</severity>
+  </rule>
 
   <rule ref="Zend.Files.ClosingTag"/>
 

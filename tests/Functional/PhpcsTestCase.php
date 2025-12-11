@@ -5,9 +5,23 @@ declare(strict_types=1);
 namespace PixelFederation\CodingStandards\Tests\Functional;
 
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 abstract class PhpcsTestCase extends TestCase
 {
+    public static function trimEndFileNewline(string $file): void
+    {
+        $file = __DIR__ . '/' . $file;
+        $content = file_get_contents($file);
+        if ($content === false) {
+            throw new RuntimeException('Could not read file: ' . $file);
+        }
+
+        $trimmedContent = rtrim($content, "\n");
+
+        file_put_contents($file, $trimmedContent);
+    }
+
     public static function assertPhpcbf(
         string $fileBefore,
         string $fileAfter,

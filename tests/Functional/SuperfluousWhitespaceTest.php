@@ -8,9 +8,12 @@ final class SuperfluousWhitespaceTest extends PhpcsTestCase
 {
     public function testPhpcbfFixesWhitespaceAsExpected(): void
     {
-        self::assertPhpcbf(
-            'SuperfluousWhitespace/Bar.SuperfluousWhitespace.before.php',
-            'SuperfluousWhitespace/Bar.SuperfluousWhitespace.after.php',
-        );
+        $fileBefore = 'SuperfluousWhitespace/Bar.SuperfluousWhitespace.before.php';
+        $fileAfter = 'SuperfluousWhitespace/Bar.SuperfluousWhitespace.after.php';
+
+        // Ensure no trailing newlines interfere with the comparison
+        self::trimEndFileNewline($fileBefore);
+
+        self::assertPhpcbf($fileBefore, $fileAfter);
     }
 }
