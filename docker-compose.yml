@@ -25,3 +25,11 @@ services:
       <<: *php_build
       args:
         PHP_VERSION: 8.4
+
+  coding-standards-php8.5:
+    <<: *php_common
+    container_name: coding-standards-php8.5
+    build:
+      <<: *php_build
+      args:
+        PHP_VERSION: 8.5
