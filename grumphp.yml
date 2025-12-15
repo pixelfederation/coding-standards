@@ -76,7 +76,7 @@ grumphp:
       load_from_net: true
       x_include: true
       dtd_validation: true
-      scheme_validation: false # doctrine orm ma error
+      scheme_validation: true
       triggered_by: [ 'xml' ]
     yamllint:
       parse_constant: true
