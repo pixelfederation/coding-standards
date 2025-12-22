@@ -62,7 +62,8 @@ grumphp:
           blacklist:
             - 'Dumper::dump'
       triggered_by: [ 'php' ]
-    phpstan:
+    phpstan_extended:
+      chunk_size: 500
       autoload_file: ~
       configuration: 'phpstan.dist.neon'
       level: max
@@ -71,7 +72,7 @@ grumphp:
         'tests/',
       ]
       triggered_by: [ 'php' ]
-    xmllint:
+    xmllint_extended:
       ignore_patterns: [ ]
       load_from_net: true
       x_include: true
