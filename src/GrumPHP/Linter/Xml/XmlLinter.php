@@ -29,13 +29,13 @@ final class XmlLinter implements LinterInterface
     public function lint(SplFileInfo $file): LintErrorsCollection
     {
         $errors = new LintErrorsCollection();
-        $useInternalErrors = $this->useInternalXmlLoggin(true);
+        $useInternalErrors = $this->useInternalXmlLogging(true);
         $this->flushXmlErrors();
 
         $document = $this->loadDocument($file);
         if (!$document) {
             $this->collectXmlErrors($errors, null);
-            $this->useInternalXmlLoggin($useInternalErrors);
+            $this->useInternalXmlLogging($useInternalErrors);
 
             return $errors;
         }
@@ -50,7 +50,7 @@ final class XmlLinter implements LinterInterface
 
         $this->checkInternalSchemes($file, $document, $errors);
 
-        $this->useInternalXmlLoggin($useInternalErrors);
+        $this->useInternalXmlLogging($useInternalErrors);
 
         return $errors;
     }
@@ -99,7 +99,7 @@ final class XmlLinter implements LinterInterface
         $this->collectXmlErrors($errors, $document);
     }
 
-    private function useInternalXmlLoggin(bool $useInternalErrors): bool
+    private function useInternalXmlLogging(bool $useInternalErrors): bool
     {
         return libxml_use_internal_errors($useInternalErrors);
     }

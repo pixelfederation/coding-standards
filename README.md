@@ -191,7 +191,7 @@ This is a list of regex patterns that will filter files to validate. With this o
 
 ### PhpMd Extended
 
-Extends the default [PhpMd task](vendor/phpro/grumphp/doc/tasks/phpmd.md) task and splits the files into smaller chunks to prevent the `Argument list too long` error.
+Extends the default [PhpMd task](vendor/phpro/grumphp/doc/tasks/phpmd.md) and splits the files into smaller chunks to prevent the `Argument list too long` error.
 
 ***Config***
 
@@ -249,6 +249,7 @@ This parameter defines how many files will be checked in one execution of phpsta
 ### XmlLint Extended
 
 Extends the default [XmlLint task](vendor/phpro/grumphp/doc/tasks/xmllint.md) with strict schema validation.
+Require `ext-dom` and `ext-libxml` extensions.
 
 ***Config***
 
