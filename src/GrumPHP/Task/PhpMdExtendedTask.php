@@ -18,8 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Process\Process;
 
 /**
+ * @see \GrumPHP\Task\PhpMd
  * @psalm-type ConfigType = array{
- *     chunk_size: int,
+ *     chunk_size: positive-int,
  *     exclude: array<array-key, string>,
  *     report_format: string,
  *     ruleset: array<array-key, string>,
@@ -49,7 +50,12 @@ final class PhpMdExtendedTask extends AbstractExternalTask
         $resolver->addAllowedValues('report_format', ['text', 'ansi']);
         $resolver->addAllowedTypes('ruleset', ['array']);
         $resolver->addAllowedTypes('triggered_by', ['array']);
-        $resolver->addAllowedTypes('chunk_size', ['int']);
+        $resolver->setAllowedValues(
+            'chunk_size',
+            static function (mixed $value): bool {
+                return false !== filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            },
+        );
 
         return ConfigOptionsResolver::fromOptionsResolver($resolver);
     }
@@ -72,14 +78,6 @@ final class PhpMdExtendedTask extends AbstractExternalTask
         }
 
         $chunkSize = $config['chunk_size'];
-        if ($chunkSize <= 0) {
-            return TaskResult::createFailed(
-                $this,
-                $context,
-                'The chunk_size configuration must be a positive integer.',
-            );
-        }
-
         $chunks = array_chunk($files->toArray(), $chunkSize);
         $totalChunks = count($chunks);
         foreach ($chunks as $index => $chunk) {

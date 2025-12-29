@@ -22,3 +22,21 @@ services:
       - "@formatter.raw_process"
     tags:
       - { name: grumphp.task, task: phpmd_extended }
+
+  PixelFederation\CodingStandards\GrumPHP\Task\PhpStanExtendedTask:
+    class: PixelFederation\CodingStandards\GrumPHP\Task\PhpStanExtendedTask
+    arguments:
+      - "@process_builder"
+      - "@formatter.raw_process"
+    tags:
+      - { name: grumphp.task, task: phpstan_extended }
+
+  PixelFederation\CodingStandards\GrumPHP\Linter\Xml\XmlLinter:
+    class: PixelFederation\CodingStandards\GrumPHP\Linter\Xml\XmlLinter
+
+  PixelFederation\CodingStandards\GrumPHP\Task\XmlLintExtendedTask:
+    class: PixelFederation\CodingStandards\GrumPHP\Task\XmlLintExtendedTask
+    arguments:
+      - '@PixelFederation\CodingStandards\GrumPHP\Linter\Xml\XmlLinter'
+    tags:
+      - {name: grumphp.task, task: xmllint_extended}
