@@ -39,7 +39,9 @@ final class XmlLintExtendedTask extends AbstractLinterTask
         $resolver->addAllowedTypes('scheme_validation', ['bool']);
         $resolver->addAllowedTypes('triggered_by', ['array']);
 
-        return ConfigOptionsResolver::fromOptionsResolver($resolver);
+        return ConfigOptionsResolver::fromClosure(
+            static fn (array $options): array => $resolver->resolve($options),
+        );
     }
 
     #[Override]
