@@ -72,6 +72,8 @@ https://github.com/slevomat/coding-standard
 
 # GrumPHP
 
+❗**Note:** Custom tasks don’t work when using `phpro/grumphp-shim` (PHAR) with `parallel.enabled: true` due to class serialization limitations. If you need custom tasks, install GrumPHP via Composer.
+
 ## Tasks
 
 ### Installation

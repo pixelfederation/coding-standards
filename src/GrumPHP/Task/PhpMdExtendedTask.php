@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PixelFederation\CodingStandards\GrumPHP\Task;
 
+use _HumbugBox94b2a3b2ef8c\Symfony\Component\Process\Process as GrumphpPharProcess;
 use GrumPHP\Collection\FilesCollection;
 use GrumPHP\Formatter\ProcessFormatterInterface;
 use GrumPHP\Runner\TaskResult;
@@ -57,7 +58,9 @@ final class PhpMdExtendedTask extends AbstractExternalTask
             },
         );
 
-        return ConfigOptionsResolver::fromOptionsResolver($resolver);
+        return ConfigOptionsResolver::fromClosure(
+            static fn (array $options): array => $resolver->resolve($options),
+        );
     }
 
     #[Override]
@@ -114,7 +117,7 @@ final class PhpMdExtendedTask extends AbstractExternalTask
     /**
      * @param ConfigType $config
      */
-    private function processChunk(FilesCollection $files, array $config): Process
+    private function processChunk(FilesCollection $files, array $config): Process|GrumphpPharProcess
     {
         $arguments = $this->processBuilder->createArgumentsForCommand('phpmd');
         $arguments->addCommaSeparatedFiles($files);

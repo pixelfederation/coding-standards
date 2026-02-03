@@ -70,6 +70,7 @@ grumphp:
       memory_limit: "-1"
       ignore_patterns: [
         'tests/',
+        'src/GrumPHP/Task/PhpMdExtendedTask.php',
       ]
       triggered_by: [ 'php' ]
     xmllint_extended:

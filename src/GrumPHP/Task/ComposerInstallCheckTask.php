@@ -37,7 +37,9 @@ final class ComposerInstallCheckTask extends AbstractExternalTask
         $resolver->addAllowedTypes('whitelist_patterns', ['array']);
         $resolver->addAllowedTypes('triggered_by', ['array']);
 
-        return ConfigOptionsResolver::fromOptionsResolver($resolver);
+        return ConfigOptionsResolver::fromClosure(
+            static fn (array $options): array => $resolver->resolve($options),
+        );
     }
 
     #[Override]
