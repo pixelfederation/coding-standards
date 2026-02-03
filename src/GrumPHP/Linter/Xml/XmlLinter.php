@@ -127,7 +127,10 @@ final class XmlLinter implements LinterInterface
     {
         libxml_set_streams_context(stream_context_create([
             'http' => [
-                'user_agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0',
+                'header' => ['User-Agent: GrumPHP XML Schema Validator'],
+            ],
+            'https' => [
+                'header' => ['User-Agent: GrumPHP XML Schema Validator'],
             ],
         ]));
     }

@@ -15,7 +15,6 @@ use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
 use Override;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Process\Process;
 
 /**
  * @see \GrumPHP\Task\PhpMd
@@ -57,7 +56,9 @@ final class PhpMdExtendedTask extends AbstractExternalTask
             },
         );
 
-        return ConfigOptionsResolver::fromOptionsResolver($resolver);
+        return ConfigOptionsResolver::fromClosure(
+            static fn (array $options): array => $resolver->resolve($options),
+        );
     }
 
     #[Override]
@@ -81,7 +82,19 @@ final class PhpMdExtendedTask extends AbstractExternalTask
         $chunks = array_chunk($files->toArray(), $chunkSize);
         $totalChunks = count($chunks);
         foreach ($chunks as $index => $chunk) {
-            $process = $this->processChunk(new FilesCollection($chunk), $config);
+            $arguments = $this->processBuilder->createArgumentsForCommand('phpmd');
+            $arguments->addCommaSeparatedFiles(new FilesCollection($chunk));
+            $arguments->add($config['report_format']);
+            $arguments->addOptionalCommaSeparatedArgument('%s', $config['ruleset']);
+            $arguments->addOptionalArgument('--exclude', $config['exclude'] !== []);
+            $arguments->addOptionalCommaSeparatedArgument('%s', $config['exclude']);
+
+            $arguments->addOptionalArgument('--suffixes', $config['triggered_by'] !== []);
+            $arguments->addOptionalCommaSeparatedArgument('%s', $config['triggered_by']);
+
+            $process = $this->processBuilder->buildProcess($arguments);
+            $process->run();
+
             if (!$process->isSuccessful()) {
                 $message = sprintf(
                     'Chunk %d/%d failed:%s%s',
@@ -109,26 +122,5 @@ final class PhpMdExtendedTask extends AbstractExternalTask
         }
 
         return $files->extensions($config['triggered_by']);
-    }
-
-    /**
-     * @param ConfigType $config
-     */
-    private function processChunk(FilesCollection $files, array $config): Process
-    {
-        $arguments = $this->processBuilder->createArgumentsForCommand('phpmd');
-        $arguments->addCommaSeparatedFiles($files);
-        $arguments->add($config['report_format']);
-        $arguments->addOptionalCommaSeparatedArgument('%s', $config['ruleset']);
-        $arguments->addOptionalArgument('--exclude', $config['exclude'] !== []);
-        $arguments->addOptionalCommaSeparatedArgument('%s', $config['exclude']);
-
-        $arguments->addOptionalArgument('--suffixes', $config['triggered_by'] !== []);
-        $arguments->addOptionalCommaSeparatedArgument('%s', $config['triggered_by']);
-
-        $process = $this->processBuilder->buildProcess($arguments);
-        $process->run();
-
-        return $process;
     }
 }

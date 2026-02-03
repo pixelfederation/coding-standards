@@ -35,6 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class PhpStanExtendedTask extends AbstractExternalTask
 {
     #[Override]
+    // phpcs:ignore SlevomatCodingStandard.Functions.FunctionLength.FunctionLength
     public static function getConfigurableOptions(): ConfigOptionsResolver
     {
         $resolver = new OptionsResolver();
@@ -74,7 +75,9 @@ final class PhpStanExtendedTask extends AbstractExternalTask
         $resolver->addAllowedTypes('triggered_by', ['array']);
         $resolver->addAllowedTypes('use_grumphp_paths', ['bool']);
 
-        return ConfigOptionsResolver::fromOptionsResolver($resolver);
+        return ConfigOptionsResolver::fromClosure(
+            static fn (array $options): array => $resolver->resolve($options),
+        );
     }
 
     #[Override]
