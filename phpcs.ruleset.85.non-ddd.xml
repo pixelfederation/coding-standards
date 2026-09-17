@@ -7,13 +7,5 @@
   <config name="testVersion" value="8.5"/>
   <config name="php_version" value="80500"/>
 
-  <rule ref="./phpcs.ruleset.85.xml">
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousErrorNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
-    <exclude name="SlevomatCodingStandard.Classes.TraitUseDeclaration"/>
-    <exclude name="SlevomatCodingStandard.Classes.TraitUseSpacing"/>
-  </rule>
+  <rule ref="./phpcs.ruleset.84.non-ddd.xml" />
 </ruleset>

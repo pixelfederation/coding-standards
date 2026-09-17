@@ -2,6 +2,8 @@ grumphp:
   ascii:
     failed: assets/grumphp/pixel-bad.txt
     succeeded: assets/grumphp/pixel-good.txt
+  git_hook_variables:
+    EXEC_GRUMPHP_COMMAND: './bin/grumphp_hooks/environment_spinup && docker exec -i coding-standards-php-min'
   fixer:
     enabled: false
   parallel:
@@ -9,17 +11,31 @@ grumphp:
     max_workers: 16
   process_timeout: 1800
   stop_on_failure: false
+  testsuites:
+    php8.4:
+      tasks: &tasks
+        - composer
+        - composer_install_check
+        - composer_normalize
+        - jsonlint
+        - phpcs
+        - phpcsfixer2
+        - phplint
+        - phpparser
+        - phpstan_extended
+        - phpunit
+        - xmllint_extended
+        - yamllint
+    php8.5:
+      tasks: *tasks
   tasks:
     composer: ~
-    composer_normalize: ~
     composer_install_check:
       script: './bin/composer_install_check.sh'
       metadata:
         priority: 900
+    composer_normalize: ~
     jsonlint: ~
-    phpunit:
-      always_execute: true
-      config_file: phpunit.xml
     phpcs:
       standard: 'phpcs.xml.dist'
       tab_width: 4
@@ -41,11 +57,9 @@ grumphp:
       diff: true
       triggered_by: [ 'php' ]
     phplint: ~
-    phpmd_extended:
-      ruleset: [ 'phpmd.dist.xml' ]
     phpparser:
       ignore_patterns: [ ]
-      php_version: '8.3'
+      php_version: '8.4'
       visitors:
         declare_strict_types: ~
         no_exit_statements: ~
@@ -68,10 +82,11 @@ grumphp:
       configuration: 'phpstan.dist.neon'
       level: max
       memory_limit: "-1"
-      ignore_patterns: [
-        'tests/',
-      ]
+      ignore_patterns: [ ]
       triggered_by: [ 'php' ]
+    phpunit:
+      always_execute: true
+      config_file: phpunit.xml
     xmllint_extended:
       ignore_patterns: [ ]
       load_from_net: true

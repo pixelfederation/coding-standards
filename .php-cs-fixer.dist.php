@@ -5,11 +5,11 @@ declare(strict_types=1);
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
-$finder = (new Finder())
+$finder = new Finder()
     ->in(__DIR__)
     ->exclude('var');
 
-return (new Config())
+return new Config()
     ->setRiskyAllowed(true)
     ->setRules([
         'array_syntax' => [

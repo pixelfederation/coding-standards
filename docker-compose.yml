@@ -1,4 +1,5 @@
 x-php-common: &php_common
+  pull_policy: always
   volumes:
     - .gitconfig:/root/.gitconfig
     - .:/srv/www:delegated
@@ -10,14 +11,6 @@ x-php-build: &php_build
   dockerfile: ./docker/php/Dockerfile
 
 services:
-  coding-standards-php8.3:
-    <<: *php_common
-    container_name: coding-standards-php8.3
-    build:
-      <<: *php_build
-      args:
-        PHP_VERSION: 8.3
-
   coding-standards-php8.4:
     <<: *php_common
     container_name: coding-standards-php8.4
@@ -33,3 +26,8 @@ services:
       <<: *php_build
       args:
         PHP_VERSION: 8.5
+
+  coding-standards-php-min:
+    extends:
+      service: coding-standards-php8.4
+    container_name: coding-standards-php-min

@@ -1,271 +1,175 @@
 # Coding standards
 
-This package provides PHPCS rule set for coding standards in Pixel Federation. It should be included into
-each project maintained by Pixel Federation that uses PHP Code Sniffer [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer).
+This package provides the shared PHP_CodeSniffer rules and GrumPHP tasks used by Pixel Federation PHP projects.
 
-## Migration from v4 to v4.1.0
-Generic ruleset was removed. Now there are only rulesets for specific PHP versions.
+## Requirements
 
-Replace (in your ruleset) reference to file
-```vendor/pixelfederation/coding-standards/phpcs.ruleset.xml``` 
-with 
-```vendor/pixelfederation/coding-standards/phpcs.ruleset.84.xml```
-for PHP 8.4.
+- PHP 8.4 or 8.5
+- PHP_CodeSniffer 4
+- Slevomat Coding Standard 8
 
-## How to use
-
-### Install composer dependencies
+## Installation
 
 ```bash
-composer require --dev pixelfederation/coding-standards:^5.0
+composer require --dev pixelfederation/coding-standards
 ```
 
-### Supported versions
+## PHP_CodeSniffer
 
-For each php version there are 2 versions of the ruleset. One for DDD projects and one for Non-DDD projects.
+The package contains rulesets for PHP 8.4 and PHP 8.5. Each PHP version has a standard ruleset and a less
+restrictive ruleset for projects that do not use DDD:
 
-For example for PHP 8.4:
-```
-vendor/pixelfederation/coding-standards/phpcs.ruleset.84.xml
-OR
-vendor/pixelfederation/coding-standards/phpcs.ruleset.84.non-ddd.xml
-```
+| PHP | Standard ruleset | Non-DDD ruleset |
+| --- | --- | --- |
+| 8.4 | `phpcs.ruleset.84.xml` | `phpcs.ruleset.84.non-ddd.xml` |
+| 8.5 | `phpcs.ruleset.85.xml` | `phpcs.ruleset.85.non-ddd.xml` |
 
-### Ruleset creation
-
-Create a file named `phpcs.ruleset.xml` in the root folder of your project with the following content:
+Create `phpcs.ruleset.xml` in the project root:
 
 ```xml
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ruleset name="PixelFederation">
-  <description>PixelFederation rule set.</description>
-    
+  <description>Project coding standard.</description>
+
   <exclude-pattern>tests/</exclude-pattern>
 
-  <rule ref="vendor/pixelfederation/coding-standards/phpcs.ruleset.84.xml"> <!-- Insert version for your php version -->
-    <!-- You can exclude some rules here -->
-    <exclude name="SlevomatCodingStandard.Files.FunctionLength"/> 
+  <rule ref="vendor/pixelfederation/coding-standards/phpcs.ruleset.84.xml">
+    <!-- Project-specific exclusions can be added here. -->
+    <exclude name="SlevomatCodingStandard.Functions.FunctionLength"/>
   </rule>
 </ruleset>
 ```
 
-### Running checks
-
-In your project directory run this command:
+Run the checks with:
 
 ```bash
 vendor/bin/phpcs --standard=phpcs.ruleset.xml src
 ```
 
-### Automatically fixing errors
-
-In your project directory run this command:
+Automatically fix supported violations with:
 
 ```bash
 vendor/bin/phpcbf --standard=phpcs.ruleset.xml src
 ```
+The complete Slevomat sniff documentation is available in the
+[Slevomat Coding Standard repository](https://github.com/slevomat/coding-standard).
 
-## Additional links
+## GrumPHP
 
-Sniffs documentation for slevomat coding standards are here: 
-https://github.com/slevomat/coding-standard
+Custom tasks require the Composer installation of GrumPHP. They do not work with `phpro/grumphp-shim` when
+parallel execution is enabled because PHAR task classes cannot be serialized.
 
-# GrumPHP
-
-❗**Note:** Custom tasks don’t work when using `phpro/grumphp-shim` (PHAR) with `parallel.enabled: true` due to class serialization limitations. If you need custom tasks, install GrumPHP via Composer.
-
-## Tasks
-
-### Installation
-
-````YAML
-# grumphp.yml
-grumphp:
-    extensions:
-        - PixelFederation\CodingStandards\GrumPHP\ExtensionLoader
-````
-
-### Doctrine ORM Mapping Validation
-
-````YAML
-# grumphp.yml
-grumphp:
-    tasks:
-        doctrine_schema_validate:
-            skip_mapping: false
-            skip_sync: false
-            skip_property_types: false
-            em: default
-            triggered_by: ['php', 'xml', 'yml']
-````
-
-For multiple entity managers you can specify the entity manager to be used:
-````YAML
-# grumphp.yml
-grumphp:
-    tasks:
-        doctrine_schema_validate_application:
-            em: application
-            metadata:
-                task: doctrine_schema_validate
-        doctrine_schema_validate_reporting:
-            em: reporting
-            metadata:
-                task: doctrine_schema_validate
-````
-
-**console_path**
-
-*Default: 'bin/console'*
-
-With this parameter you can set the path of the console to be used.
-
-**skip_mapping**
-
-*Default: false*
-
-With this parameter you can skip the mapping validation check.
-
-**skip_sync**
-
-*Default: false*
-
-With this parameter you can skip checking if the mapping is in sync with the database.
-
-**triggered_by**
-
-*Default: [php, xml, yml]*
-
-This is a list of extensions that should trigger the Doctrine task.
-
-**em**
-
-*Default: null*
-
-Require `doctrine/orm >= 3.0`.
-Specify the entity manager to be used. If not set, the default entity manager will be used.
-
-**skip_property_types**
-
-*Default: null*
-
-Require `doctrine/orm >= 3.0`.
-With this parameter you can skip checking if property types match the Doctrine types.
-
-### Composer Install Check
-
-````YAML
-# grumphp.yml
-grumphp:
-    tasks:
-        composer_install_check:
-            script: './vendor/pixelfederation/coding-standards/bin/composer_install_check.sh',
-            ignore_patterns: []
-            triggered_by: ['php', 'yml', 'yaml', 'xml']
-            whitelist_patterns: []
-            metadata:
-                priority: 900
-````
-
-**script**
-
-*Default: './bin/composer_install_check.sh'*
-
-Path to check script.
-
-**ignore_patterns**
-
-*Default: []*
-
-This is a list of patterns that will be ignored by phpcs. With this option you can skip files like tests. Leave this option blank to run phpcs for every php file.
-
-**triggered_by**
-
-*Default: ['php', 'yml', 'yaml', 'xml']*
-
-This is a list of extensions to be sniffed.
-
-**whitelist_patterns**
-
-*Default: []*
-
-This is a list of regex patterns that will filter files to validate. With this option you can skip files like tests. This option is used in relation with the parameter `triggered_by`.
-
-### PhpMd Extended
-
-Extends the default [PhpMd task](vendor/phpro/grumphp/doc/tasks/phpmd.md) and splits the files into smaller chunks to prevent the `Argument list too long` error.
-
-***Config***
-
-The task lives under the `phpmd_extended` namespace and has following configurable parameters:
+Register the extension in the project's `grumphp.yml`:
 
 ```yaml
-# grumphp.yml
 grumphp:
-    tasks:
-        phpmd_extended:
-            whitelist_patterns: []
-            exclude: []
-            report_format: text
-            ruleset: ['cleancode', 'codesize', 'naming']
-            triggered_by: ['php']
-            chunks_size: 1000
+  extensions:
+    - PixelFederation\CodingStandards\GrumPHP\ExtensionLoader
 ```
 
-**chunk_size**
+### Doctrine ORM mapping validation
 
-*Default: 1000*
+```yaml
+grumphp:
+  tasks:
+    doctrine_schema_validate:
+      console_path: bin/console
+      em: default
+      skip_mapping: false
+      skip_property_types: false
+      skip_sync: false
+      triggered_by: [php, xml, yml]
+```
 
-This parameter defines how many files will be checked in one execution of phpmd. This can help with performance on large codebases.
+For multiple entity managers, configure multiple tasks using the shared task implementation:
+
+```yaml
+grumphp:
+  tasks:
+    doctrine_schema_validate_application:
+      em: application
+      metadata:
+        task: doctrine_schema_validate
+    doctrine_schema_validate_reporting:
+      em: reporting
+      metadata:
+        task: doctrine_schema_validate
+```
+
+Options:
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `console_path` | `bin/console` | Path to the Symfony console. |
+| `em` | `null` | Entity manager name. Requires Doctrine ORM 3 or newer. |
+| `skip_mapping` | `false` | Skip mapping validation. |
+| `skip_property_types` | `null` | Skip the Doctrine property type check. Requires Doctrine ORM 3 or newer. |
+| `skip_sync` | `false` | Skip the database synchronization check. |
+| `triggered_by` | `[php, xml, yml]` | File extensions that trigger the task. |
+
+### Composer install check
+
+This task checks whether changes to Composer files require dependencies to be installed again.
+
+```yaml
+grumphp:
+  tasks:
+    composer_install_check:
+      script: ./vendor/pixelfederation/coding-standards/bin/composer_install_check.sh
+      ignore_patterns: []
+      triggered_by: [json, lock, php, xml, yaml, yml]
+      whitelist_patterns: []
+      metadata:
+        priority: 900
+```
+
+Options:
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `script` | `./bin/composer_install_check.sh` | Path to the check script. |
+| `ignore_patterns` | `[]` | Patterns excluded from the check. |
+| `triggered_by` | `[json, lock, php, xml, yaml, yml]` | File extensions that trigger the task. |
+| `whitelist_patterns` | `[]` | Patterns limiting which changed files are checked. |
 
 ### PHPStan Extended
 
-Extends the default [PHPStan task](vendor/phpro/grumphp/doc/tasks/phpstan.md) and splits the files into smaller chunks to prevent the `Argument list too long` error.
-
-***Config***
-
-The task lives under the `phpstan_extended` namespace and has following configurable parameters:
+This task extends the standard PHPStan task and splits files into smaller chunks to avoid operating-system command
+length limits.
 
 ```yaml
-# grumphp.yml
 grumphp:
-    tasks:
-        phpstan_extended:
-            autoload_file: ~
-            chunk_size: 1000
-            configuration: ~
-            level: null
-            force_patterns: []
-            ignore_patterns: []
-            triggered_by: ['php']
-            memory_limit: "-1"
-            use_grumphp_paths: true
+  tasks:
+    phpstan_extended:
+      autoload_file: ~
+      chunk_size: 1000
+      configuration: phpstan.neon
+      force_patterns: []
+      ignore_patterns: []
+      level: max
+      memory_limit: "-1"
+      triggered_by: [php]
+      use_grumphp_paths: true
 ```
 
-**chunk_size**
+`chunk_size` determines the maximum number of files processed by one PHPStan execution.
 
-*Default: 1000*
+### XMLLint Extended
 
-This parameter defines how many files will be checked in one execution of phpstan. This can help with performance on large codebases.
-
-### XmlLint Extended
-
-Extends the default [XmlLint task](vendor/phpro/grumphp/doc/tasks/xmllint.md) with strict schema validation.
-Require `ext-dom` and `ext-libxml` extensions.
-
-***Config***
-
-It lives under the `xmllint_extended` namespace and has following configurable parameters:
+This task extends the standard XMLLint task with DTD, XInclude, and XML Schema validation. It requires the `dom`
+and `libxml` PHP extensions.
 
 ```yaml
-# grumphp.yml
 grumphp:
-    tasks:
-        xmllint_extended:
-            ignore_patterns: []
-            load_from_net: false
-            x_include: false
-            dtd_validation: false
-            scheme_validation: false
-            triggered_by: ['xml']
+  tasks:
+    xmllint_extended:
+      dtd_validation: false
+      ignore_patterns: []
+      load_from_net: false
+      scheme_validation: false
+      triggered_by: [xml]
+      x_include: false
 ```
+
+When schema validation is enabled, the linter supports `xsi:noNamespaceSchemaLocation` and multi-namespace
+`xsi:schemaLocation` documents. Imported namespaces are resolved by the root document schema.

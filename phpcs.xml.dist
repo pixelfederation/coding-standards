@@ -8,14 +8,14 @@
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
 
-    <config name="testVersion" value="8.3" />
+    <config name="testVersion" value="8.4" />
 
     <file>config/</file>
     <file>src/</file>
 
     <exclude-pattern>vendor/</exclude-pattern>
 
-    <rule ref="phpcs.ruleset.83.non-ddd.xml"/>
+    <rule ref="phpcs.ruleset.84.non-ddd.xml"/>
 
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
         <properties>
