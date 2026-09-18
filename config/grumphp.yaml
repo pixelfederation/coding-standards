@@ -15,14 +15,6 @@ services:
     tags:
       - { name: grumphp.task, task: composer_install_check }
 
-  PixelFederation\CodingStandards\GrumPHP\Task\PhpMdExtendedTask:
-    class: PixelFederation\CodingStandards\GrumPHP\Task\PhpMdExtendedTask
-    arguments:
-      - "@process_builder"
-      - "@formatter.raw_process"
-    tags:
-      - { name: grumphp.task, task: phpmd_extended }
-
   PixelFederation\CodingStandards\GrumPHP\Task\PhpStanExtendedTask:
     class: PixelFederation\CodingStandards\GrumPHP\Task\PhpStanExtendedTask
     arguments:

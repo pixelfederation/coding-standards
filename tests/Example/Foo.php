@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PixelFederation\CodingStandards\Tests\Example;
 
-final class Foo
+final readonly class Foo
 {
     public function __construct(
-        private readonly Bar $bar,
+        private Bar $bar,
     ) {}
 
     public function multiply(): int

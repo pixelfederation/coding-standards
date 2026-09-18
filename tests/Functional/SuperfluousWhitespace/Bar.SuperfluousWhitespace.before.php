@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 namespace PixelFederation\CodingStandards\Tests\Functional\SuperfluousWhitespace;
 
-final class Bar
+final readonly class Bar
 {
 
-    public readonly int $superNumber;
+    public int $superNumber;
 
 
     /**
@@ -18,9 +18,9 @@ final class Bar
      * @param int $height
      */
     public function __construct(
-        public readonly int $width ,
+        public int $width ,
 
-        public readonly int $height,
+        public int $height,
     )
     {
         $total = $this->width + $this->height;

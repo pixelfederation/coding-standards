@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PixelFederation\CodingStandards\GrumPHP\Linter\Xml;
 
 use DOMDocument;
+use DOMNode;
 use GrumPHP\Collection\LintErrorsCollection;
 use GrumPHP\Linter\LinterInterface;
 use GrumPHP\Linter\LintError;
@@ -32,27 +33,29 @@ final class XmlLinter implements LinterInterface
         $useInternalErrors = $this->useInternalXmlLogging(true);
         $this->flushXmlErrors();
 
-        $document = $this->loadDocument($file);
-        if (!$document) {
-            $this->collectXmlErrors($errors, null);
-            $this->useInternalXmlLogging($useInternalErrors);
+        try {
+            $document = $this->loadDocument($file);
+            if (!$document) {
+                $this->collectXmlErrors($errors, null);
+
+                return $errors;
+            }
+
+            if ($this->xInclude && $document->xinclude() === -1) {
+                $this->collectXmlErrors($errors, $document);
+            }
+
+            if ($this->dtdValidation && !$this->validateDTD($document)) {
+                $this->collectXmlErrors($errors, $document);
+            }
+
+            $this->checkInternalSchemes($file, $document, $errors);
 
             return $errors;
+        } finally {
+            $this->flushXmlErrors();
+            $this->useInternalXmlLogging($useInternalErrors);
         }
-
-        if ($this->xInclude && $document->xinclude() === -1) {
-            $this->collectXmlErrors($errors, $document);
-        }
-
-        if ($this->dtdValidation && !$this->validateDTD($document)) {
-            $this->collectXmlErrors($errors, $document);
-        }
-
-        $this->checkInternalSchemes($file, $document, $errors);
-
-        $this->useInternalXmlLogging($useInternalErrors);
-
-        return $errors;
     }
 
     #[Override]
@@ -281,19 +284,8 @@ final class XmlLinter implements LinterInterface
         LintErrorsCollection $errors,
         array $schemas,
     ): array {
-        $schemaLocation = $document->documentElement?->attributes->getNamedItem('schemaLocation');
+        $schemaLocation = $this->getSchemaLocation($file, $document, $errors);
         if ($schemaLocation === null) {
-            return $schemas;
-        }
-
-        if ($schemaLocation->namespaceURI !== self::XSI_NAMESPACE) {
-            $this->addError(
-                $errors,
-                LintError::TYPE_FATAL,
-                'schemaLocation attribute is not in the XML Schema Instance namespace',
-                $file->getPathname(),
-            );
-
             return $schemas;
         }
 
@@ -310,51 +302,73 @@ final class XmlLinter implements LinterInterface
             return $schemas;
         }
 
-        foreach ($parts as $key => $value) {
-            $schemas = $this->addSchemasFromSchemaLocationPart(
-                $file,
-                $document,
-                $errors,
-                $schemas,
-                $key,
-                $value,
-            );
+        $documentNamespace = $document->documentElement->namespaceURI ?? '';
+        if ($documentNamespace === '') {
+            return $schemas;
         }
 
-        return $schemas;
-    }
-
-    /**
-     * @param array<string> $schemas
-     * @return array<string>
-     */
-    private function addSchemasFromSchemaLocationPart(
-        SplFileInfo $file,
-        DOMDocument $document,
-        LintErrorsCollection $errors,
-        array $schemas,
-        int $key,
-        string $value,
-    ): array {
-        if ($key & 1) {
-            $schemas[] = $value;
+        $schema = $this->findSchemaForNamespace($parts, $documentNamespace);
+        if ($schema === null) {
+            $this->addMissingSchemaError($file, $errors, $documentNamespace);
 
             return $schemas;
         }
 
-        if ($value !== $document->documentElement?->namespaceURI) {
+        $schemas[] = $schema;
+
+        return $schemas;
+    }
+
+    private function getSchemaLocation(
+        SplFileInfo $file,
+        DOMDocument $document,
+        LintErrorsCollection $errors,
+    ): ?DOMNode {
+        $schemaLocation = $document->documentElement?->attributes->getNamedItemNS(
+            self::XSI_NAMESPACE,
+            'schemaLocation',
+        );
+        if ($schemaLocation !== null) {
+            return $schemaLocation;
+        }
+
+        if ($document->documentElement?->attributes->getNamedItem('schemaLocation') !== null) {
             $this->addError(
                 $errors,
                 LintError::TYPE_FATAL,
-                sprintf(
-                    'Namespace "%s" from schemaLocation is not declared in the document',
-                    $value,
-                ),
+                'schemaLocation attribute is not in the XML Schema Instance namespace',
                 $file->getPathname(),
             );
         }
 
-        return $schemas;
+        return null;
+    }
+
+    /**
+     * @param array<int, string> $parts
+     */
+    private function findSchemaForNamespace(array $parts, string $documentNamespace): ?string
+    {
+        for ($key = 0; $key < count($parts); $key += 2) {
+            if ($parts[$key] === $documentNamespace) {
+                return $parts[$key + 1];
+            }
+        }
+
+        return null;
+    }
+
+    private function addMissingSchemaError(
+        SplFileInfo $file,
+        LintErrorsCollection $errors,
+        string $documentNamespace,
+    ): void {
+        $this->addError(
+            $errors,
+            LintError::TYPE_FATAL,
+            sprintf('Missing schema for document namespace "%s"', $documentNamespace),
+            $file->getPathname(),
+        );
     }
 
     private function locateScheme(SplFileInfo $xmlFile, string $scheme, bool $loadFromNet): ?string

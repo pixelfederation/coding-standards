@@ -28,7 +28,7 @@ final class ComposerInstallCheckTask extends AbstractExternalTask
         $resolver->setDefaults([
             'ignore_patterns' => [],
             'script' => './vendor/pixelfederation/coding-standards/bin/composer_install_check.sh',
-            'triggered_by' => ['php', 'yml', 'yaml', 'xml'],
+            'triggered_by' => ['json', 'lock', 'php', 'xml', 'yaml', 'yml'],
             'whitelist_patterns' => [],
         ]);
 

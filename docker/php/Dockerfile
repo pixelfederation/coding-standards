@@ -4,6 +4,7 @@ FROM php:${PHP_VERSION}-cli
 
 RUN apt-get update && apt-get install -y git-core zlib1g-dev libzip-dev zip unzip
 RUN docker-php-ext-install zip
+RUN php -r 'foreach (["dom", "libxml"] as $extension) { if (!extension_loaded($extension)) { fwrite(STDERR, sprintf("Required PHP extension %s is not loaded.\n", $extension)); exit(1); } }'
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \

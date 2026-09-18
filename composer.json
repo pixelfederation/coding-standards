@@ -11,21 +11,20 @@
   ],
   "homepage": "https://github.com/pixelfederation/coding-standards",
   "require": {
-    "php": "^8.3",
-    "slevomat/coding-standard": "^8.24",
-    "squizlabs/php_codesniffer": "^4.0"
+    "php": "^8.4",
+    "slevomat/coding-standard": "^8.31.1",
+    "squizlabs/php_codesniffer": "^4.0.4"
   },
   "require-dev": {
     "ext-dom": "*",
     "ext-libxml": "*",
-    "ergebnis/composer-normalize": "^2.45",
-    "friendsofphp/php-cs-fixer": "^3.89",
-    "nikic/php-parser": "^5.6",
+    "ergebnis/composer-normalize": "^2.53",
+    "friendsofphp/php-cs-fixer": "^3.95.25",
+    "nikic/php-parser": "^5.9",
     "php-parallel-lint/php-parallel-lint": "^1.4",
-    "phpmd/phpmd": "^2.15",
-    "phpro/grumphp": "^2.19",
-    "phpstan/phpstan": "^2.1",
-    "phpunit/phpunit": "^12.5"
+    "phpro/grumphp": "^2.23",
+    "phpstan/phpstan": "^2.2.14",
+    "phpunit/phpunit": "^13.3.4"
   },
   "autoload": {
     "psr-4": {
@@ -34,9 +33,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "PixelFederation\\CodingStandards\\Tests\\": [
-        "tests/"
-      ]
+      "PixelFederation\\CodingStandards\\Tests\\": "tests/"
     }
   },
   "config": {
@@ -57,10 +54,10 @@
     "auto-scripts": {
       "normalizer": "composer normalize"
     },
-    "phpcbf8.3": "phpcbf --standard=phpcs.ruleset.83.xml tests/Example",
     "phpcbf8.4": "phpcbf --standard=phpcs.ruleset.84.xml tests/Example",
-    "phpcs8.3": "phpcs --standard=phpcs.ruleset.83.xml tests/Example",
+    "phpcbf8.5": "phpcbf --standard=phpcs.ruleset.85.xml tests/Example",
     "phpcs8.4": "phpcs --standard=phpcs.ruleset.84.xml tests/Example",
+    "phpcs8.5": "phpcs --standard=phpcs.ruleset.85.xml tests/Example",
     "phpunit": "vendor/bin/phpunit tests/Functional --configuration=phpunit.xml --colors=always"
   }
 }
