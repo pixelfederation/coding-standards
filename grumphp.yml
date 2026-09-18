@@ -88,7 +88,8 @@ grumphp:
       always_execute: true
       config_file: phpunit.xml
     xmllint_extended:
-      ignore_patterns: [ ]
+      ignore_patterns:
+        - 'tests/Functional/XmlLinter/invalid-multiple-namespaces.xml'
       load_from_net: true
       x_include: true
       dtd_validation: true

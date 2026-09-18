@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="urn:root"
+      xmlns:child="urn:child"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:root schema/root.xsd urn:child schema/child.xsd">
+  <child:unexpected>value</child:unexpected>
+</root>

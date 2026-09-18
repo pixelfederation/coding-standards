@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PixelFederation\CodingStandards\GrumPHP\Linter\Xml;
 
 use DOMDocument;
+use DOMNode;
 use GrumPHP\Collection\LintErrorsCollection;
 use GrumPHP\Linter\LinterInterface;
 use GrumPHP\Linter\LintError;
@@ -283,19 +284,8 @@ final class XmlLinter implements LinterInterface
         LintErrorsCollection $errors,
         array $schemas,
     ): array {
-        $schemaLocation = $document->documentElement?->attributes->getNamedItem('schemaLocation');
+        $schemaLocation = $this->getSchemaLocation($file, $document, $errors);
         if ($schemaLocation === null) {
-            return $schemas;
-        }
-
-        if ($schemaLocation->namespaceURI !== self::XSI_NAMESPACE) {
-            $this->addError(
-                $errors,
-                LintError::TYPE_FATAL,
-                'schemaLocation attribute is not in the XML Schema Instance namespace',
-                $file->getPathname(),
-            );
-
             return $schemas;
         }
 
@@ -313,6 +303,10 @@ final class XmlLinter implements LinterInterface
         }
 
         $documentNamespace = $document->documentElement->namespaceURI ?? '';
+        if ($documentNamespace === '') {
+            return $schemas;
+        }
+
         $schema = $this->findSchemaForNamespace($parts, $documentNamespace);
         if ($schema === null) {
             $this->addMissingSchemaError($file, $errors, $documentNamespace);
@@ -323,6 +317,31 @@ final class XmlLinter implements LinterInterface
         $schemas[] = $schema;
 
         return $schemas;
+    }
+
+    private function getSchemaLocation(
+        SplFileInfo $file,
+        DOMDocument $document,
+        LintErrorsCollection $errors,
+    ): ?DOMNode {
+        $schemaLocation = $document->documentElement?->attributes->getNamedItemNS(
+            self::XSI_NAMESPACE,
+            'schemaLocation',
+        );
+        if ($schemaLocation !== null) {
+            return $schemaLocation;
+        }
+
+        if ($document->documentElement?->attributes->getNamedItem('schemaLocation') !== null) {
+            $this->addError(
+                $errors,
+                LintError::TYPE_FATAL,
+                'schemaLocation attribute is not in the XML Schema Instance namespace',
+                $file->getPathname(),
+            );
+        }
+
+        return null;
     }
 
     /**

@@ -127,7 +127,7 @@ Options:
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `script` | `./bin/composer_install_check.sh` | Path to the check script. |
+| `script` | `./vendor/pixelfederation/coding-standards/bin/composer_install_check.sh` | Path to the check script. |
 | `ignore_patterns` | `[]` | Patterns excluded from the check. |
 | `triggered_by` | `[json, lock, php, xml, yaml, yml]` | File extensions that trigger the task. |
 | `whitelist_patterns` | `[]` | Patterns limiting which changed files are checked. |
