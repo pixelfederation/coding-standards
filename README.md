@@ -51,6 +51,30 @@ Automatically fix supported violations with:
 ```bash
 vendor/bin/phpcbf --standard=phpcs.ruleset.xml src
 ```
+
+### Alphabetical array keys
+
+The standard checks multi-line associative arrays with
+`PixelFederationCodingStandard.Arrays.AlphabeticallySortedByKeys`. Arrays used as the direct value of a `choices`
+key are excluded because their order controls the order shown in the user interface. The containing array is still
+checked.
+
+Projects can replace the configured list of ignored parent keys in their ruleset:
+
+```xml
+<rule ref="PixelFederationCodingStandard.Arrays.AlphabeticallySortedByKeys">
+  <properties>
+    <property name="ignoredParentKeys" type="array">
+      <element value="choices"/>
+      <element value="steps"/>
+    </property>
+  </properties>
+</rule>
+```
+
+Without `ignoredParentKeys`, the sniff behaves like Slevomat's
+`SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys` sniff and checks every multi-line associative array.
+
 The complete Slevomat sniff documentation is available in the
 [Slevomat Coding Standard repository](https://github.com/slevomat/coding-standard).
 
