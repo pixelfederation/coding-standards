@@ -52,6 +52,13 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
                     'alpha' => true,
                 ),
             );
+
+            $escaped = [
+                "choices\q" => [
+                    'zebra' => true,
+                    'alpha' => true,
+                ],
+            ];
             PHP;
 
         try {
@@ -59,7 +66,7 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
                 throw new RuntimeException('Could not create temporary PHP file.');
             }
 
-            self::assertSame([], $this->runSniffOnPath($path, ['choices'], 0));
+            self::assertSame([], $this->runSniffOnPath($path, ['choices', 'choices\q'], 0));
         } finally {
             if (is_file($temporaryPath)) {
                 unlink($temporaryPath);
