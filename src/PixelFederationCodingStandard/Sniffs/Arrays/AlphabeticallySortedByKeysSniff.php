@@ -10,6 +10,9 @@ use SlevomatCodingStandard\Helpers\TokenHelper;
 use SlevomatCodingStandard\Sniffs\Arrays\AlphabeticallySortedByKeysSniff as SlevomatAlphabeticallySortedByKeysSniff;
 
 use function in_array;
+use function preg_replace_callback;
+use function str_replace;
+use function stripcslashes;
 use function substr;
 
 use const T_CONSTANT_ENCAPSED_STRING;
@@ -51,8 +54,22 @@ final class AlphabeticallySortedByKeysSniff extends SlevomatAlphabeticallySorted
             return false;
         }
 
-        $key = substr($tokens[$keyPointer]['content'], 1, -1);
+        $key = $this->decodeStringLiteral($tokens[$keyPointer]['content']);
 
         return in_array($key, $this->ignoredParentKeys, true);
+    }
+
+    private function decodeStringLiteral(string $literal): string
+    {
+        $content = substr($literal, 1, -1);
+        if ($literal[0] === "'") {
+            return str_replace(['\\\\', '\\\''], ['\\', '\''], $content);
+        }
+
+        return preg_replace_callback(
+            '~\\\\(?:[nrtvef\\\\$"]|[0-7]{1,3}|x[0-9a-f]{1,2})~i',
+            static fn (array $matches): string => stripcslashes($matches[0]),
+            $content,
+        ) ?? $content;
     }
 }

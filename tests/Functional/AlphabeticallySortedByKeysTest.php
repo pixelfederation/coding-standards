@@ -43,30 +43,14 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
         }
 
         $path = $temporaryPath . '.php';
-        $content = <<<'PHP'
-            <?php
-
-            $config = array(
-                "choices" => array(
-                    'zebra' => true,
-                    'alpha' => true,
-                ),
-            );
-
-            $escaped = [
-                "choices\q" => [
-                    'zebra' => true,
-                    'alpha' => true,
-                ],
-            ];
-            PHP;
+        $content = $this->getEscapedKeysSnippet();
 
         try {
             if (!rename($temporaryPath, $path) || file_put_contents($path, $content) === false) {
                 throw new RuntimeException('Could not create temporary PHP file.');
             }
 
-            self::assertSame([], $this->runSniffOnPath($path, ['choices', 'choices\q'], 0));
+            self::assertSame([], $this->runSniffOnPath($path, ['choices', 'choices\q', 'choi"ces'], 0));
         } finally {
             if (is_file($temporaryPath)) {
                 unlink($temporaryPath);
@@ -75,6 +59,32 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
                 unlink($path);
             }
         }
+    }
+
+    private function getEscapedKeysSnippet(): string
+    {
+        return <<<'PHP'
+            <?php
+
+            $config = array(
+                "choices" => array(
+                    'zebra' => true,
+                    'alpha' => true,
+                ),
+            );
+            $unknownEscape = [
+                "choices\q" => [
+                    'zebra' => true,
+                    'alpha' => true,
+                ],
+            ];
+            $escapedQuote = [
+                "choi\"ces" => [
+                    'zebra' => true,
+                    'alpha' => true,
+                ],
+            ];
+            PHP;
     }
 
     /**
@@ -145,7 +155,10 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
     private function createRuleset(array $ignoredParentKeys): string
     {
         $elements = implode('', array_map(
-            static fn (string $key): string => sprintf('<element value="%s"/>', htmlspecialchars($key, ENT_XML1)),
+            static fn (string $key): string => sprintf(
+                '<element value="%s"/>',
+                htmlspecialchars($key, ENT_QUOTES | ENT_XML1),
+            ),
             $ignoredParentKeys,
         ));
         $content = sprintf(
