@@ -35,6 +35,17 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
         );
     }
 
+    public function testPackagedRulesetConfiguresIgnoredParentKeys(): void
+    {
+        $messages = $this->runSniffWithRuleset(
+            __DIR__ . '/AlphabeticallySortedByKeys/Arrays.php',
+            self::getPath('PATH_PHPCS_RULESET'),
+            1,
+        );
+
+        self::assertSame([13, 23, 34], array_column($messages, 'line'));
+    }
+
     public function testLongArraySyntaxIsIgnored(): void
     {
         $temporaryPath = tempnam(sys_get_temp_dir(), 'phpcs-array-');
@@ -50,7 +61,11 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
                 throw new RuntimeException('Could not create temporary PHP file.');
             }
 
-            self::assertSame([], $this->runSniffOnPath($path, ['choices', 'choices\q', 'choi"ces'], 0));
+            self::assertSame([], $this->runSniffOnPath(
+                $path,
+                ['choices', 'choices\q', 'choices\X41', 'choi"ces'],
+                0,
+            ));
         } finally {
             if (is_file($temporaryPath)) {
                 unlink($temporaryPath);
@@ -74,6 +89,12 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
             );
             $unknownEscape = [
                 "choices\q" => [
+                    'zebra' => true,
+                    'alpha' => true,
+                ],
+            ];
+            $uppercaseHexEscape = [
+                "choices\X41" => [
                     'zebra' => true,
                     'alpha' => true,
                 ],
@@ -103,21 +124,29 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
     private function runSniffOnPath(string $path, array $ignoredParentKeys, int $expectedExitCode): array
     {
         $ruleset = $this->createRuleset($ignoredParentKeys);
-        $command = sprintf(
-            '%s -q --standard=%s --report=json %s 2>&1',
-            escapeshellarg(self::getPath('PATH_PHPCS')),
-            escapeshellarg($ruleset),
-            escapeshellarg($path),
-        );
 
         try {
-            exec($command, $output, $exitCode);
-            self::assertSame($expectedExitCode, $exitCode, implode("\n", $output));
-
-            return $this->extractMessages(implode("\n", $output));
+            return $this->runSniffWithRuleset($path, $ruleset, $expectedExitCode);
         } finally {
             unlink($ruleset);
         }
+    }
+
+    /** @return list<array<mixed, mixed>> */
+    private function runSniffWithRuleset(string $path, string $ruleset, int $expectedExitCode): array
+    {
+        $command = sprintf(
+            '%s -q --standard=%s --sniffs=%s --report=json %s 2>&1',
+            escapeshellarg(self::getPath('PATH_PHPCS')),
+            escapeshellarg($ruleset),
+            escapeshellarg('PixelFederationCodingStandard.Arrays.AlphabeticallySortedByKeys'),
+            escapeshellarg($path),
+        );
+
+        exec($command, $output, $exitCode);
+        self::assertSame($expectedExitCode, $exitCode, implode("\n", $output));
+
+        return $this->extractMessages(implode("\n", $output));
     }
 
     /** @return list<array<mixed, mixed>> */

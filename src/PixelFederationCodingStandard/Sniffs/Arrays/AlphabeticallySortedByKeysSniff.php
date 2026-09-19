@@ -67,7 +67,7 @@ final class AlphabeticallySortedByKeysSniff extends SlevomatAlphabeticallySorted
         }
 
         return preg_replace_callback(
-            '~\\\\(?:[nrtvef\\\\$"]|[0-7]{1,3}|x[0-9a-f]{1,2})~i',
+            '~\\\\(?:[nrtvef\\\\$"]|[0-7]{1,3}|x[0-9A-Fa-f]{1,2})~',
             static fn (array $matches): string => stripcslashes($matches[0]),
             $content,
         ) ?? $content;
