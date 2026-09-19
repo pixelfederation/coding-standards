@@ -2,6 +2,15 @@
 
 All notable changes from version 4.0.0 onward are documented in this file.
 
+## 6.1.0
+
+### Added
+
+- Added a project `AlphabeticallySortedByKeys` sniff that extends Slevomat's sniff of the same name with an
+  `ignoredParentKeys` property, so multi-line arrays that are the direct value of a configured parent key (for
+  example `choices`) can keep a meaningful order instead of an alphabetical one. The containing array is still
+  checked.
+
 ## 6.0.0
 
 ### Added
