@@ -46,6 +46,20 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
         self::assertSame([13, 23, 34], array_column($messages, 'line'));
     }
 
+    public function testMatchArmArraysAreNotIgnoredEvenWhenArmConditionMatchesIgnoredKey(): void
+    {
+        $messages = $this->runSniff('AlphabeticallySortedByKeys/MatchArms.php', ['choices']);
+
+        self::assertSame([8, 12], array_column($messages, 'line'));
+        self::assertSame(
+            [
+                'PixelFederationCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder',
+                'PixelFederationCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder',
+            ],
+            array_column($messages, 'source'),
+        );
+    }
+
     public function testLongArraySyntaxIsIgnored(): void
     {
         $temporaryPath = tempnam(sys_get_temp_dir(), 'phpcs-array-');
