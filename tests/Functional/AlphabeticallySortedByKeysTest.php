@@ -63,7 +63,7 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
 
             self::assertSame([], $this->runSniffOnPath(
                 $path,
-                ['choices', 'choices\q', 'choices\X41', 'choi"ces'],
+                ['choices', 'choices\q', 'choices\X41', 'choi"ces', "choi\\'ces", "control\u{80}"],
                 0,
             ));
         } finally {
@@ -77,6 +77,11 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
     }
 
     private function getEscapedKeysSnippet(): string
+    {
+        return $this->getBasicEscapesSnippet() . $this->getAdditionalEscapesSnippet();
+    }
+
+    private function getBasicEscapesSnippet(): string
     {
         return <<<'PHP'
             <?php
@@ -101,6 +106,31 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
             ];
             $escapedQuote = [
                 "choi\"ces" => [
+                    'zebra' => true,
+                    'alpha' => true,
+                ],
+            ];
+            PHP;
+    }
+
+    private function getAdditionalEscapesSnippet(): string
+    {
+        return <<<'PHP'
+
+            $unicodeEscape = [
+                "cho\u{69}ces" => [
+                    'zebra' => true,
+                    'alpha' => true,
+                ],
+            ];
+            $unicodeControlEscape = [
+                "control\u{80}" => [
+                    'zebra' => true,
+                    'alpha' => true,
+                ],
+            ];
+            $singleQuotedEscapes = [
+                'choi\\\'ces' => [
                     'zebra' => true,
                     'alpha' => true,
                 ],

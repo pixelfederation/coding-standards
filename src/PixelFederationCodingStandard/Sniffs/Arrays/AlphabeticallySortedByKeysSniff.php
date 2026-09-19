@@ -9,9 +9,12 @@ use PHP_CodeSniffer\Files\File;
 use SlevomatCodingStandard\Helpers\TokenHelper;
 use SlevomatCodingStandard\Sniffs\Arrays\AlphabeticallySortedByKeysSniff as SlevomatAlphabeticallySortedByKeysSniff;
 
+use function hexdec;
 use function in_array;
+use function is_string;
+use function json_decode;
 use function preg_replace_callback;
-use function str_replace;
+use function sprintf;
 use function stripcslashes;
 use function substr;
 
@@ -63,13 +66,43 @@ final class AlphabeticallySortedByKeysSniff extends SlevomatAlphabeticallySorted
     {
         $content = substr($literal, 1, -1);
         if ($literal[0] === "'") {
-            return str_replace(['\\\\', '\\\''], ['\\', '\''], $content);
+            return preg_replace_callback(
+                '~\\\\([\\\\\'])~',
+                static fn (array $matches): string => $matches[1],
+                $content,
+            ) ?? $content;
         }
 
         return preg_replace_callback(
-            '~\\\\(?:[nrtvef\\\\$"]|[0-7]{1,3}|x[0-9A-Fa-f]{1,2})~',
-            static fn (array $matches): string => stripcslashes($matches[0]),
+            '~\\\\(?:[nrtvef\\\\$"]|[0-7]{1,3}|x[0-9A-Fa-f]{1,2}|u\{[0-9A-Fa-f]+\})~',
+            function (array $matches): string {
+                if (str_starts_with($matches[0], '\\u{')) {
+                    return $this->decodeUnicodeEscape($matches[0]);
+                }
+
+                return stripcslashes($matches[0]);
+            },
             $content,
         ) ?? $content;
+    }
+
+    private function decodeUnicodeEscape(string $escape): string
+    {
+        $codePoint = (int) hexdec(substr($escape, 3, -1));
+        if ($codePoint < 0x10000) {
+            return $this->decodeJsonString(sprintf('"\\u%04x"', $codePoint), $escape);
+        }
+
+        $codePoint -= 0x10000;
+        $json = sprintf('"\\u%04x\\u%04x"', 0xd800 + ($codePoint >> 10), 0xdc00 + ($codePoint & 0x3ff));
+
+        return $this->decodeJsonString($json, $escape);
+    }
+
+    private function decodeJsonString(string $json, string $fallback): string
+    {
+        $decoded = json_decode($json);
+
+        return is_string($decoded) ? $decoded : $fallback;
     }
 }
