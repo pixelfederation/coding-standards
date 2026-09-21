@@ -37,11 +37,19 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
 
     public function testPackagedRulesetConfiguresIgnoredParentKeys(): void
     {
-        $messages = $this->runSniffWithRuleset(
-            __DIR__ . '/AlphabeticallySortedByKeys/Arrays.php',
-            self::getPath('PATH_PHPCS_RULESET'),
-            1,
-        );
+        $path = $this->copyFixtureToTemporaryFile('AlphabeticallySortedByKeys/Arrays.php');
+
+        try {
+            $messages = $this->runSniffWithRuleset(
+                $path,
+                self::getPath('PATH_PHPCS_RULESET'),
+                1,
+            );
+        } finally {
+            if (is_file($path)) {
+                unlink($path);
+            }
+        }
 
         self::assertSame([13, 23, 34], array_column($messages, 'line'));
     }
@@ -88,6 +96,27 @@ final class AlphabeticallySortedByKeysTest extends PhpcsTestCase
                 unlink($path);
             }
         }
+    }
+
+    private function copyFixtureToTemporaryFile(string $fixture): string
+    {
+        $temporaryPath = tempnam(sys_get_temp_dir(), 'phpcs-array-');
+        if ($temporaryPath === false) {
+            throw new RuntimeException('Could not create temporary PHP file.');
+        }
+
+        $path = $temporaryPath . '.php';
+        if (!rename($temporaryPath, $path)) {
+            throw new RuntimeException('Could not create temporary PHP file.');
+        }
+
+        if (!copy(__DIR__ . '/' . $fixture, $path)) {
+            unlink($path);
+
+            throw new RuntimeException('Could not copy fixture to temporary PHP file.');
+        }
+
+        return $path;
     }
 
     private function getEscapedKeysSnippet(): string

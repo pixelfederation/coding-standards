@@ -11,6 +11,11 @@ All notable changes from version 4.0.0 onward are documented in this file.
   example `choices`) can keep a meaningful order instead of an alphabetical one. The containing array is still
   checked.
 
+### Changed
+
+- Excluded the superfluous trait name, superfluous abstract class prefix, alphabetical array key order, and function
+  length checks from `tests/` directories.
+
 ## 6.0.0
 
 ### Added
