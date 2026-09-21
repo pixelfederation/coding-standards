@@ -236,7 +236,13 @@
 
   <rule ref="Zend.Files.ClosingTag"/>
 
-  <rule ref="SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys"/>
+  <rule ref="PixelFederationCodingStandard.Arrays.AlphabeticallySortedByKeys">
+    <properties>
+      <property name="ignoredParentKeys" type="array">
+        <element value="choices"/>
+      </property>
+    </properties>
+  </rule>
   <rule ref="SlevomatCodingStandard.Arrays.ArrayAccess"/>
   <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
   <rule ref="SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed"/>
