@@ -2,6 +2,13 @@
 
 All notable changes from version 4.0.0 onward are documented in this file.
 
+## 6.2.0
+
+### Added
+
+- Added a project `EnumCaseName` sniff that requires strict PascalCase enum case names (for example `case OneTwo;`
+  instead of `case ONE_TWO;`).
+
 ## 6.1.0
 
 ### Added

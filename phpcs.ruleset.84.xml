@@ -22,6 +22,7 @@
 
   <config name="installed_paths" value="src/PixelFederationCodingStandard,vendor/pixelfederation/coding-standards/src/PixelFederationCodingStandard,vendor/slevomat/coding-standard"/>
 
+  <rule ref="PixelFederationCodingStandard.Classes.EnumCaseName"/>
   <rule ref="PixelFederationCodingStandard.Classes.RequireAbstractOrFinal"/>
   <rule ref="PixelFederationCodingStandard.ControlStructures.DisallowSwitchStatement"/>
 
