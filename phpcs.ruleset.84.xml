@@ -458,8 +458,8 @@
       <property name="searchAnnotations" value="true"/>
       <property name="allowFullyQualifiedExceptions" value="false"/>
       <property name="allowFullyQualifiedGlobalClasses" value="false"/>
-      <property name="allowFullyQualifiedGlobalFunctions" value="true"/>
-      <property name="allowFullyQualifiedGlobalConstants" value="true"/>
+      <property name="allowFullyQualifiedGlobalFunctions" value="false"/>
+      <property name="allowFullyQualifiedGlobalConstants" value="false"/>
       <property name="allowFallbackGlobalFunctions" value="true"/>
       <property name="allowFallbackGlobalConstants" value="true"/>
     </properties>
