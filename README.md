@@ -78,6 +78,44 @@ Without `ignoredParentKeys`, the sniff behaves like Slevomat's
 The complete Slevomat sniff documentation is available in the
 [Slevomat Coding Standard repository](https://github.com/slevomat/coding-standard).
 
+## PHP-CS-Fixer
+
+The package ships a `.php-cs-fixer.dist.php` with a minimal, explicit rule set (no bundled rule sets like
+`@Symfony`), so every enabled rule is visible directly in the config.
+
+### Forbidding `use function`/`use const` imports of global names
+
+`SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly` (see [PHP_CodeSniffer](#php_codesniffer)) always treats a
+global function or constant that is imported via `use function`/`use const` and referenced by its short name as
+correct, regardless of `allowFallbackGlobalFunctions`/`allowFallbackGlobalConstants`. It has no option to forbid
+that import style while still allowing the unqualified fallback call, for example:
+
+```php
+use function strlen;
+
+strlen('foo'); // always considered OK by ReferenceUsedNamesOnly, even if you want to forbid the import.
+```
+
+To actually forbid importing global (root-namespace) functions or constants and require the plain, unqualified
+call instead, use PHP-CS-Fixer's `global_namespace_import` rule with `import_functions`/`import_constants` set to
+`false`:
+
+```php
+'global_namespace_import' => [
+    'import_classes' => null,    // leave classes as-is; handled by ReferenceUsedNamesOnly instead.
+    'import_constants' => false, // removes `use const` imports of global constants.
+    'import_functions' => false, // removes `use function` imports of global functions.
+],
+```
+
+With this rule, running `vendor/bin/php-cs-fixer fix` removes a `use function strlen;`/`use const PHP_EOL;` import
+and rewrites any fully qualified call (`\strlen()`) to the unqualified form, keeping only the bare, unqualified
+call style. The rule only affects names in the global (root) namespace — `use function Foo\Bar\baz;` for a
+namespaced function is left untouched.
+
+Before enabling this project-wide, run `vendor/bin/php-cs-fixer fix --dry-run --diff` (and the full GrumPHP suite)
+first, since existing code may rely on the imported style and would need to be fixed.
+
 ## GrumPHP
 
 Custom tasks require the Composer installation of GrumPHP. They do not work with `phpro/grumphp-shim` when

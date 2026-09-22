@@ -2,6 +2,22 @@
 
 All notable changes from version 4.0.0 onward are documented in this file.
 
+## 6.2.0
+
+### Added
+
+- Added a project `EnumCaseName` sniff that requires strict PascalCase enum case names (for example `case OneTwo;`
+  instead of `case ONE_TWO;`).
+
+### Changed
+
+- Tightened `SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly`: exceptions and global classes referenced by
+  a fully qualified name must now be imported via a `use` statement (`allowFullyQualifiedExceptions` and
+  `allowFullyQualifiedGlobalClasses` are now `false`). Fallback references to global functions and constants
+  without a `use` statement are now explicitly allowed (`allowFallbackGlobalFunctions` and
+  `allowFallbackGlobalConstants` are now `true`), and the previously excluded `ReferenceViaFallbackGlobalName` error
+  is no longer excluded, since it can no longer be triggered by an allowed fallback reference.
+
 ## 6.1.0
 
 ### Added

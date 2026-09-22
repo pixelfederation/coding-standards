@@ -63,7 +63,7 @@ final class XmlLinter implements LinterInterface
     {
         $extensions = get_loaded_extensions();
 
-        return in_array('libxml', $extensions, true) && \in_array('dom', $extensions, true);
+        return in_array('libxml', $extensions, true) && in_array('dom', $extensions, true);
     }
 
     public function setLoadFromNet(bool $loadFromNet): void
