@@ -1,6 +1,6 @@
 # Coding standards
 
-This package provides the shared PHP_CodeSniffer rules and GrumPHP tasks used by Pixel Federation PHP projects.
+This package provides the shared PHP_CodeSniffer rules, Twigcs ruleset, and GrumPHP tasks used by Pixel Federation projects.
 
 ## Requirements
 
@@ -77,6 +77,51 @@ Without `ignoredParentKeys`, the sniff behaves like Slevomat's
 
 The complete Slevomat sniff documentation is available in the
 [Slevomat Coding Standard repository](https://github.com/slevomat/coding-standard).
+
+## Twigcs
+
+The optional Twigcs ruleset extends the official Twig standard with HTML layout checks. Install Twigcs in the
+consuming project:
+
+```bash
+composer require --dev friendsoftwig/twigcs:^6.6.1
+```
+
+Select the ruleset directly:
+
+```bash
+vendor/bin/twigcs templates --ruleset='PixelFederation\CodingStandards\Twigcs\Ruleset\PixelFederation'
+```
+
+Or configure the standard GrumPHP `twigcs` task:
+
+```yaml
+grumphp:
+  tasks:
+    twigcs:
+      path: templates/
+      ruleset: 'PixelFederation\CodingStandards\Twigcs\Ruleset\PixelFederation'
+```
+
+Write every HTML attribute on a separate line, even when there is only one. Place the opening tag terminator
+(`>` or `/>`), content, and closing tag on separate lines:
+
+```twig
+<span
+    class="label"
+    aria-hidden="true"
+>
+    {{- label -}}
+</span>
+```
+
+Elements without attributes can keep their opening tag on one line, such as `<span>` or `<br>`. The rule supports
+Twig expressions, conditional attributes, and attribute helpers. It ignores HTML and Twig comments and preserves
+the literal bodies of `pre`, `textarea`, `script`, and `style`. Their opening attributes are still checked.
+
+Preserve meaningful whitespace when formatting inline content; use Twig whitespace control selectively. The rule
+does not validate indentation depth, HTML validity, or rendered whitespace semantics, and does not fix violations
+automatically. Enable it explicitly when the project's templates are ready for these checks.
 
 ## PHP-CS-Fixer
 

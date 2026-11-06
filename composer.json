@@ -18,13 +18,17 @@
   "require-dev": {
     "ext-dom": "*",
     "ext-libxml": "*",
-    "ergebnis/composer-normalize": "^2.53",
-    "friendsofphp/php-cs-fixer": "^3.95.25",
+    "ergebnis/composer-normalize": "^2.56",
+    "friendsofphp/php-cs-fixer": "^3.95.28",
+    "friendsoftwig/twigcs": "^6.6.1",
     "nikic/php-parser": "^5.9",
     "php-parallel-lint/php-parallel-lint": "^1.4",
-    "phpro/grumphp": "^2.23",
-    "phpstan/phpstan": "^2.2.14",
-    "phpunit/phpunit": "^13.3.4"
+    "phpro/grumphp": "^2.26",
+    "phpstan/phpstan": "^2.3.5",
+    "phpunit/phpunit": "^13.4.6"
+  },
+  "suggest": {
+    "friendsoftwig/twigcs": "Required to use the Pixel Federation Twigcs ruleset (^6.6.1)."
   },
   "autoload": {
     "psr-4": {
@@ -58,6 +62,6 @@
     "phpcbf8.5": "phpcbf --standard=phpcs.ruleset.85.xml tests/Example",
     "phpcs8.4": "phpcs --standard=phpcs.ruleset.84.xml tests/Example",
     "phpcs8.5": "phpcs --standard=phpcs.ruleset.85.xml tests/Example",
-    "phpunit": "vendor/bin/phpunit tests/Functional --configuration=phpunit.xml --colors=always"
+    "phpunit": "vendor/bin/phpunit --configuration=phpunit.xml --colors=always"
   }
 }
