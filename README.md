@@ -1,6 +1,6 @@
 # Coding standards
 
-This package provides the shared PHP_CodeSniffer rules and GrumPHP tasks used by Pixel Federation PHP projects.
+This package provides the shared PHP_CodeSniffer rules, Twigcs ruleset, and GrumPHP tasks used by Pixel Federation projects.
 
 ## Requirements
 
@@ -77,6 +77,106 @@ Without `ignoredParentKeys`, the sniff behaves like Slevomat's
 
 The complete Slevomat sniff documentation is available in the
 [Slevomat Coding Standard repository](https://github.com/slevomat/coding-standard).
+
+## Twigcs
+
+The optional Twigcs ruleset extends the official Twig standard with HTML layout checks. Install Twigcs in the
+consuming project:
+
+```bash
+composer require --dev friendsoftwig/twigcs:^6.6.1
+```
+
+Select the ruleset directly:
+
+```bash
+vendor/bin/twigcs templates --ruleset='PixelFederation\CodingStandards\Twigcs\Ruleset\PixelFederation'
+```
+
+Or configure the standard GrumPHP `twigcs` task:
+
+```yaml
+grumphp:
+  tasks:
+    twigcs:
+      path: templates/
+      ruleset: 'PixelFederation\CodingStandards\Twigcs\Ruleset\PixelFederation'
+```
+
+Write every HTML attribute on a separate line, even when there is only one. Place the opening tag terminator
+(`>` or `/>`), content, and closing tag on separate lines:
+
+```twig
+<span
+    class="label"
+    aria-hidden="true"
+>
+    {{- label -}}
+</span>
+```
+
+Elements without attributes can keep their opening tag on one line, such as `<span>` or `<br>`. The rule supports
+Twig expressions, conditional attributes, and attribute helpers. It ignores HTML and Twig comments and preserves
+the literal bodies of `pre`, `textarea`, `script`, and `style`. Their opening attributes are still checked.
+
+By default, `strong`, `em`, `b`, `i`, and `small` can contain inline content and have their closing tag on the
+same line. Their attributes still follow the layout checks. Use `inlineTags` to replace this list
+(case-insensitive), or pass `[]` to disable these exceptions.
+
+GrumPHP selects a ruleset class; it does not expose `inlineTags` as a YAML option. To customize the list,
+create an autoloadable project ruleset, for example `src/CodingStandard/TwigRuleset.php` in a project with
+the `App\` namespace mapped to `src/`:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\CodingStandard;
+
+use FriendsOfTwig\Twigcs\Rule\RuleInterface;
+use FriendsOfTwig\Twigcs\Ruleset\Official;
+use FriendsOfTwig\Twigcs\Validator\Violation;
+use Override;
+use PixelFederation\CodingStandards\Twigcs\Rule\HtmlLayoutRule;
+
+final class TwigRuleset extends Official
+{
+    /**
+     * @return list<RuleInterface>
+     */
+    #[Override]
+    public function getRules(): array
+    {
+        return [
+            ...array_values(parent::getRules()),
+            new HtmlLayoutRule(
+                Violation::SEVERITY_ERROR,
+                inlineTags: ['strong', 'em', 'b', 'i', 'small', 'span'],
+            ),
+        ];
+    }
+}
+```
+
+The shared `PixelFederation` ruleset is final, so the custom ruleset extends `Official` and adds its own
+configured `HtmlLayoutRule`. This preserves the official Twig checks.
+
+Select the custom ruleset in `grumphp.yml`:
+
+```yaml
+grumphp:
+  tasks:
+    twigcs:
+      path: templates/
+      ruleset: 'App\CodingStandard\TwigRuleset'
+```
+
+Keep the shared `PixelFederation` ruleset configuration above when the default inline tags are sufficient.
+
+Preserve meaningful whitespace when formatting inline content; use Twig whitespace control selectively. The rule
+does not validate indentation depth, HTML validity, or rendered whitespace semantics, and does not fix violations
+automatically. Enable it explicitly when the project's templates are ready for these checks.
 
 ## PHP-CS-Fixer
 

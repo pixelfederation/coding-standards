@@ -2,6 +2,14 @@
 
 All notable changes from version 4.0.0 onward are documented in this file.
 
+## 6.3.0
+
+### Added
+
+- Added the optional `PixelFederation\CodingStandards\Twigcs\Ruleset\PixelFederation` ruleset, extending the official
+  Twig standard with one HTML attribute per line and separate lines for tag terminators, content, and closing tags.
+- Added tests for HTML layout checks, Twig expressions and attribute helpers, literal element bodies, and rule reuse.
+
 ## 6.2.0
 
 ### Added

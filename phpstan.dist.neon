@@ -1,4 +1,5 @@
 parameters:
+    checkMissingOverrideMethodAttribute: true
     treatPhpDocTypesAsCertain: false
     level: max
     paths:
