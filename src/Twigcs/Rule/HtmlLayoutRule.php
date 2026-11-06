@@ -14,6 +14,16 @@ use RuntimeException;
 final class HtmlLayoutRule extends AbstractRule implements RuleInterface
 {
     /**
+     * @param list<string> $inlineTags
+     */
+    public function __construct(
+        int $severity,
+        private readonly array $inlineTags = ['strong', 'em', 'b', 'i', 'small'],
+    ) {
+        parent::__construct($severity);
+    }
+
+    /**
      * @return list<Violation>
      */
     #[Override]
@@ -64,11 +74,11 @@ final class HtmlLayoutRule extends AbstractRule implements RuleInterface
     private function checkTag(string $code, string $path, string $tag, int $offset): array
     {
         if (str_starts_with($tag, '</')) {
-            return $this->checkLine($code, $path, $offset, 'Put the closing HTML tag on its own line.');
+            return $this->checkClosingTag($code, $path, $tag, $offset);
         }
 
         $violations = $this->checkAttributes($code, $path, $tag, $offset);
-        if (preg_match('~^<(?:pre|textarea|script|style)(?=[\s>])~i', $tag) === 1) {
+        if ($this->allowsInlineContent($tag)) {
             return $violations;
         }
 
@@ -84,6 +94,30 @@ final class HtmlLayoutRule extends AbstractRule implements RuleInterface
         }
 
         return $violations;
+    }
+
+    private function isInlineTag(string $tag): bool
+    {
+        preg_match('~^</?([a-zA-Z][\w:-]*)~', $tag, $name);
+        $tagName = $name[1] ?? throw new RuntimeException('Cannot parse HTML tag name.');
+
+        return in_array(strtolower($tagName), array_map(strtolower(...), $this->inlineTags), true);
+    }
+
+    private function allowsInlineContent(string $tag): bool
+    {
+        return $this->isInlineTag($tag)
+            || preg_match('~^<(?:pre|textarea|script|style)(?=[\s>])~i', $tag) === 1;
+    }
+
+    /**
+     * @return list<Violation>
+     */
+    private function checkClosingTag(string $code, string $path, string $tag, int $offset): array
+    {
+        return $this->isInlineTag($tag)
+            ? []
+            : $this->checkLine($code, $path, $offset, 'Put the closing HTML tag on its own line.');
     }
 
     /**

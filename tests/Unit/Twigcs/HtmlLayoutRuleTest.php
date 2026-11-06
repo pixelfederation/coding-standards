@@ -26,7 +26,11 @@ final class HtmlLayoutRuleTest extends TestCase
         yield 'two attributes on one line' => ["<img\n    src=\"image.png\" alt=\"\"\n>", 1];
         yield 'single attribute on tag line' => ["<img src=\"image.png\"\n>", 1];
         yield 'terminator on attribute line' => ["<img\n    src=\"image.png\">", 1];
-        yield 'plain inline content' => ['<b>text</b>', 2];
+        yield 'plain inline content' => ['<span>text</span>', 2];
+        yield 'default inline tags' => ['<strong>a</strong><em>b</em><b>c</b><i>d</i><small>e</small>', 0];
+        yield 'uppercase inline tag' => ['<STRONG>text</STRONG>', 0];
+        yield 'inline attributes still checked' => ['<strong class="label">text</strong>', 2];
+        yield 'block inside inline tag still checked' => ['<strong><div>text</div></strong>', 2];
         yield 'no attributes' => ["<b>\n    text\n</b>", 0];
         yield 'void element' => ["<img\n    alt=\"\"\n/>", 0];
         yield 'greater than inside value' => ["<div\n    title=\"a > b\"\n>\n</div>", 0];
@@ -77,6 +81,23 @@ TWIG,
         self::assertSame(2, $violations[0]->getLine());
         self::assertSame(5, $violations[0]->getColumn());
         self::assertSame([], $rule->check(new TokenStream([], new Source("<br>\n", 'test'))));
+    }
+
+    public function testCustomInlineTagsReplaceDefaults(): void
+    {
+        $rule = new HtmlLayoutRule(Violation::SEVERITY_ERROR, inlineTags: ['SPAN']);
+        $source = new Source('<span>allowed</span><strong>checked</strong>', 'test');
+        $violations = $rule->check(new TokenStream([], $source));
+
+        self::assertCount(2, $violations);
+    }
+
+    public function testEmptyInlineTagsChecksAllTags(): void
+    {
+        $rule = new HtmlLayoutRule(Violation::SEVERITY_ERROR, inlineTags: []);
+        $source = new Source('<strong>checked</strong>', 'test');
+
+        self::assertCount(2, $rule->check(new TokenStream([], $source)));
     }
 
     public function testRulesetPreservesOfficialRules(): void
